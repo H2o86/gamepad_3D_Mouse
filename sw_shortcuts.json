@@ -1,0 +1,70 @@
+{
+    "categories": {
+        "Góc Nhìn & Điều Hướng (Navigation)": {
+            "Isometric View": "Ctrl+7",
+            "Normal To": "Ctrl+8",
+            "Front View": "Ctrl+1",
+            "Back View": "Ctrl+2",
+            "Left View": "Ctrl+3",
+            "Right View": "Ctrl+4",
+            "Top View": "Ctrl+5",
+            "Bottom View": "Ctrl+6",
+            "Zoom to Fit": "F",
+            "Zoom to Area": "Z",
+            "Zoom In": "Shift+Z",
+            "Previous View": "Ctrl+Shift+Z",
+            "Orientation Dialog": "Space",
+            "Shortcut Bar": "S",
+            "View Selector": "Ctrl+Space"
+        },
+        "Phác Thảo (Sketching)": {
+            "Smart Dimension": "D",
+            "Line": "L",
+            "Circle": "C",
+            "3 Point Arc": "A",
+            "Ellipse": "E",
+            "Offset Entities": "O",
+            "Trim Entities": "T",
+            "Extend Entities": "X",
+            "Construction Geometry": "Ctrl+Shift+C"
+        },
+        "Dựng Khối & Chỉnh Sửa (Features)": {
+            "Extrude Boss/Base": "E",
+            "Revolve Boss/Base": "R",
+            "Extrude Cut": "Alt+E",
+            "Revolve Cut": "Alt+R",
+            "Fillet / Round": "F",
+            "Move / Copy": "M",
+            "Rebuild": "Ctrl+B",
+            "Force Rebuild": "Ctrl+Q",
+            "Rebuild All Configurations": "Ctrl+Shift+B"
+        },
+        "Thao Tác Hệ Thống & Edit": {
+            "Undo": "Ctrl+Z",
+            "Redo": "Ctrl+Y",
+            "Escape / Cancel": "ESC",
+            "Delete": "DELETE",
+            "Select All": "Ctrl+A",
+            "Cut": "Ctrl+X",
+            "Copy": "Ctrl+C",
+            "Paste": "Ctrl+V",
+            "Save": "Ctrl+S",
+            "Open": "Ctrl+O",
+            "New": "Ctrl+N",
+            "Measure": "Ctrl+T"
+        },
+        "Lắp Ráp & Ẩn/Hiện Component": {
+            "Hide Hovered Component": "TAB",
+            "Show Hovered Component": "Shift+TAB",
+            "Show All Hidden Components": "Ctrl+Shift+TAB",
+            "Collapse All Items": "Shift+C",
+            "Toggle Selection Filter": "F5"
+        },
+        "Tính Năng Tay Cầm Đặc Biệt": {
+            "Bật/Tắt Precision Mode (30% Speed)": "precision_toggle",
+            "Tạm Dừng / Tiếp Tục Điều Khiển": "pause_toggle",
+            "Xoay Nghiêng Trai (Roll Left)": "roll_left",
+            "Xoay Nghiêng Phải (Roll Right)": "roll_right"
+        }
+    }
+}

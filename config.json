@@ -1,0 +1,41 @@
+{
+    "sensitivity": {
+        "pan": 12.0,
+        "rotate": 10.0,
+        "zoom": 15.0,
+        "roll": 8.0,
+        "precision_multiplier": 0.3
+    },
+    "deadzone": {
+        "left_stick": 0.15,
+        "right_stick": 0.15,
+        "trigger": 0.05
+    },
+    "curve": {
+        "exponent": 1.8
+    },
+    "polling": {
+        "rate_hz": 120
+    },
+    "app_filter": {
+        "target_app_only": true,
+        "target_keywords": ["SOLIDWORKS", "SLDWORKS.EXE"],
+        "lock_cursor_center": true
+    },
+    "keymap": {
+        "button_dpad_up": "Ctrl+7",
+        "button_dpad_down": "Ctrl+8",
+        "button_dpad_left": "F",
+        "button_dpad_right": "Ctrl+1",
+        "button_a": "ESC",
+        "button_b": "Ctrl+B",
+        "button_x": "D",
+        "button_y": "Space",
+        "button_lb": "roll_left",
+        "button_rb": "roll_right",
+        "button_l3": "precision_toggle",
+        "button_r3": "pause_toggle",
+        "button_start": "S",
+        "button_back": "Ctrl+Z"
+    }
+}
