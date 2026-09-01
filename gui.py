@@ -29,17 +29,44 @@ BUTTON_DEFS = [
     ("button_back", "Nút Back / Select"),
 ]
 
+DEFAULT_CONFIG = {
+    "sensitivity": {"pan": 12.0, "rotate": 10.0, "zoom": 15.0, "roll": 8.0, "precision_multiplier": 0.3},
+    "deadzone": {"left_stick": 0.15, "right_stick": 0.15, "trigger": 0.05},
+    "curve": {"exponent": 1.8},
+    "polling": {"rate_hz": 120},
+    "app_filter": {
+        "target_app_only": True,
+        "target_keywords": ["SOLIDWORKS", "SLDWORKS.EXE"],
+        "lock_cursor_center": True,
+    },
+    "keymap": {
+        "button_dpad_up": "Ctrl+7",
+        "button_dpad_down": "Ctrl+8",
+        "button_dpad_left": "F",
+        "button_dpad_right": "Ctrl+1",
+        "button_a": "ESC",
+        "button_b": "Ctrl+B",
+        "button_x": "D",
+        "button_y": "Space",
+        "button_lb": "roll_left",
+        "button_rb": "roll_right",
+        "button_l3": "precision_toggle",
+        "button_r3": "pause_toggle",
+        "button_start": "S",
+        "button_back": "Ctrl+Z",
+    },
+}
+
 
 class ApplicationGUI(tk.Tk):
-    """Graphical User Interface for Flydigi Dune Fox -> SolidWorks 3D Mouse, Focus Filter & Edge Wrapping."""
+    """Graphical User Interface for Flydigi Dune Fox -> SolidWorks 3D Mouse Control Center."""
 
     def __init__(self):
         super().__init__()
         self.title("Flydigi Dune Fox - SolidWorks 3D SpaceMouse Control Center")
-        self.geometry("740x700")
+        self.geometry("740x720")
         self.resizable(True, True)
 
-        # Set Window Icon
         if os.path.exists(ICON_ICO_PATH):
             try:
                 self.iconbitmap(ICON_ICO_PATH)
@@ -73,33 +100,7 @@ class ApplicationGUI(tk.Tk):
                     return json.load(f)
             except Exception:
                 pass
-        return {
-            "sensitivity": {"pan": 12.0, "rotate": 10.0, "zoom": 15.0, "roll": 8.0, "precision_multiplier": 0.3},
-            "deadzone": {"left_stick": 0.15, "right_stick": 0.15, "trigger": 0.05},
-            "curve": {"exponent": 1.8},
-            "polling": {"rate_hz": 120},
-            "app_filter": {
-                "target_app_only": True,
-                "target_keywords": ["SOLIDWORKS", "SLDWORKS.EXE"],
-                "lock_cursor_center": True,
-            },
-            "keymap": {
-                "button_dpad_up": "Ctrl+7",
-                "button_dpad_down": "Ctrl+8",
-                "button_dpad_left": "F",
-                "button_dpad_right": "Ctrl+1",
-                "button_a": "ESC",
-                "button_b": "Ctrl+B",
-                "button_x": "D",
-                "button_y": "Space",
-                "button_lb": "roll_left",
-                "button_rb": "roll_right",
-                "button_l3": "precision_toggle",
-                "button_r3": "pause_toggle",
-                "button_start": "S",
-                "button_back": "Ctrl+Z",
-            },
-        }
+        return json.loads(json.dumps(DEFAULT_CONFIG))
 
     def load_presets(self):
         if os.path.exists(PRESETS_PATH):
@@ -139,9 +140,39 @@ class ApplicationGUI(tk.Tk):
             with open(CONFIG_PATH, "w", encoding="utf-8") as f:
                 json.dump(self.config_data, f, indent=4)
             self.navigator.update_config(self.config_data)
-            messagebox.showinfo("Lưu Cấu Hình", "Đã lưu cài đặt & chế độ chống trôi con trỏ chuột mượt thành công!")
+            messagebox.showinfo("Lưu Cấu Hình", "Đã lưu cài đặt & cấu hình mới thành công!")
         except Exception as e:
             messagebox.showerror("Lỗi", f"Không thể lưu file cấu hình: {e}")
+
+    def reset_to_defaults(self):
+        if messagebox.askyesno("Xác Nhận Khôi Phục", "Bạn có chắc chắn muốn khôi phục toàn bộ cài đặt độ nhạy & gán phím về mặc định ban đầu?"):
+            self.config_data = json.loads(json.dumps(DEFAULT_CONFIG))
+
+            # Update Sliders
+            self.slider_pan.set(DEFAULT_CONFIG["sensitivity"]["pan"])
+            self.slider_rotate.set(DEFAULT_CONFIG["sensitivity"]["rotate"])
+            self.slider_zoom.set(DEFAULT_CONFIG["sensitivity"]["zoom"])
+            self.slider_deadzone.set(DEFAULT_CONFIG["deadzone"]["left_stick"])
+            self.slider_curve.set(DEFAULT_CONFIG["curve"]["exponent"])
+
+            # Update Checkboxes
+            self.var_target_only.set(DEFAULT_CONFIG["app_filter"]["target_app_only"])
+            self.var_lock_cursor.set(DEFAULT_CONFIG["app_filter"]["lock_cursor_center"])
+
+            # Update Keymap Entries
+            def_keymap = DEFAULT_CONFIG["keymap"]
+            for key_id, _ in BUTTON_DEFS:
+                if key_id in self.entry_widgets:
+                    self.entry_widgets[key_id].set(def_keymap.get(key_id, ""))
+
+            # Save to file
+            try:
+                with open(CONFIG_PATH, "w", encoding="utf-8") as f:
+                    json.dump(self.config_data, f, indent=4)
+                self.navigator.update_config(self.config_data)
+                messagebox.showinfo("Khôi Phục Mặc Định", "Đã đặt toàn bộ cài đặt & phím bấm về mặc định ban đầu!")
+            except Exception as e:
+                messagebox.showerror("Lỗi", f"Không thể lưu file cấu hình: {e}")
 
     def create_widgets(self):
         header = ttk.Frame(self, padding=12)
@@ -228,6 +259,9 @@ class ApplicationGUI(tk.Tk):
         btn_frame = ttk.Frame(tab_keys, padding=5)
         btn_frame.pack(fill="x", pady=5)
 
+        btn_reset1 = ttk.Button(btn_frame, text="↺ Đặt Về Mặc Định", command=self.reset_to_defaults)
+        btn_reset1.pack(side="left", padx=5)
+
         btn_save = ttk.Button(btn_frame, text="💾 Lưu Phím Cấu Hình", command=self.save_config)
         btn_save.pack(side="right", padx=5)
 
@@ -288,8 +322,14 @@ class ApplicationGUI(tk.Tk):
         self.slider_curve = ttk.Scale(frame_sens, from_=1.0, to_=3.0, value=self.config_data["curve"]["exponent"])
         self.slider_curve.pack(fill="x", pady=(0, 5))
 
-        btn_save_opt = ttk.Button(tab_options, text="💾 Lưu Cài Đặt Tất Cả", command=self.save_config)
-        btn_save_opt.pack(anchor="e", pady=10)
+        btn_opt_frame = ttk.Frame(tab_options)
+        btn_opt_frame.pack(fill="x", pady=10)
+
+        btn_reset2 = ttk.Button(btn_opt_frame, text="↺ Đặt Về Mặc Định", command=self.reset_to_defaults)
+        btn_reset2.pack(side="left")
+
+        btn_save_opt = ttk.Button(btn_opt_frame, text="💾 Lưu Cài Đặt Tất Cả", command=self.save_config)
+        btn_save_opt.pack(side="right")
 
         # Tab 3: Live Monitor
         tab_monitor = ttk.Frame(notebook, padding=15)
