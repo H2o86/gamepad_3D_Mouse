@@ -90,13 +90,169 @@ DEFAULT_CONFIG = {
     },
 }
 
+GUIDE_TEXTS = {
+    "en": """=== SOLIDMOUSE - 3D SPACEMOUSE FOR SOLIDWORKS ===
+
+1. OVERVIEW & FEATURES
+--------------------------------------------------
+SolidMouse converts standard gamepads (Flydigi Dune Fox, Xbox, PS4/PS5) into a dedicated 3D SpaceMouse for SolidWorks.
+- Native Low-Latency Control (~1ms XInput API response).
+- Smooth Edge Border Wrapping: 100% continuous 3D rotation without cursor border collisions.
+- SOLIDWORKS Window Focus Filtering: Automatically suspends control when switching to other apps.
+- 6-Axis Gyroscope Navigation: Tilt your PS4/PS5 controller to rotate models physically in 3D space!
+
+2. DEFAULT CONTROL MAPPING
+--------------------------------------------------
+- Left Analog Stick  : Pan View (Ctrl + Middle Mouse Drag)
+- Right Analog Stick : Rotate View 3D (Middle Mouse Drag)
+- LT / RT (L2 / R2)  : Zoom Out / Zoom In (Shift + Middle Mouse Drag)
+- LB / RB (L1 / R1)  : Roll View Left / Right (Alt + Middle Mouse Drag)
+- D-Pad Up           : Isometric View (Ctrl + 7)
+- D-Pad Down         : Normal To View (Ctrl + 8)
+- D-Pad Left         : Zoom to Fit (F Key)
+- D-Pad Right        : Front View (Ctrl + 1)
+- Button A / ❌      : Escape (ESC)
+- Button B / ⭕      : Rebuild Model (Ctrl + B)
+- Button X / 🟦      : Smart Dimension (D Key)
+- Button Y / 🔺      : View Orientation Dialog (Spacebar)
+- Click L3 Stick     : Toggle Precision Mode (30% Speed for micro-details)
+- Click R3 Stick     : Pause / Resume 3D Mouse Control
+
+3. HOW TO CONNECT CONTROLLERS
+--------------------------------------------------
+- Flydigi Dune Fox / Xbox: Connect via 2.4G USB Dongle or USB Cable (XInput Mode).
+- PlayStation PS4 / PS5  : Connect via Bluetooth or USB Cable (DirectInput + Gyro Mode).
+
+4. CUSTOM KEY MAPPER
+--------------------------------------------------
+Go to '🎮 Key Mapper' tab to rebind any of the 14 buttons to preset SolidWorks 2019 shortcuts or custom hotkeys (e.g., Ctrl+Alt+S, F5, Shift+E).
+""",
+    "vi": """=== SOLIDMOUSE - TRUNG TÂM ĐIỀU KHIỂN 3D SPACEMOUSE SOLIDWORKS ===
+
+1. TỔNG QUAN & TÍNH NĂNG
+--------------------------------------------------
+SolidMouse biến các loại tay cầm chơi game (Flydigi Dune Fox, Xbox, PS4/PS5) thành thiết bị 3D SpaceMouse chuyên dụng cho SolidWorks.
+- Phản hồi siêu mượt (~1ms XInput Native API).
+- Chống văng viền chuột (Edge Wrapping): Xoay 3D mượt 100% không bị gián đoạn hay giật khựng.
+- Tự động lọc cửa sổ SolidWorks: Chỉ kích hoạt khi mở SolidWorks, tự ngắt khi chuyển sang app khác.
+- Gyroscope 6DoF: Nghiêng tay cầm PS4/PS5 thực tế để xoay mô hình 3D trực quan trong không gian!
+
+2. SƠ ĐỒ ĐIỀU KHIỂN MẶC ĐỊNH
+--------------------------------------------------
+- Cần gạt Trái (Left Stick)  : Pan View (Ctrl + Giữ Chuột Giữa)
+- Cần gạt Phải (Right Stick) : Rotate View 3D (Giữ Chuột Giữa)
+- Cò LT / RT (L2 / R2)       : Zoom Out / Zoom In (Shift + Giữ Chuột Giữa)
+- Nút LB / RB (L1 / R1)      : Roll View Trái / Phải (Alt + Giữ Chuột Giữa)
+- D-Pad Up                   : Isometric View (Ctrl + 7)
+- D-Pad Down                 : Normal To View (Ctrl + 8)
+- D-Pad Left                 : Zoom to Fit (Phím F)
+- D-Pad Right                : Front View (Ctrl + 1)
+- Nút A / ❌                 : Escape (Phím ESC)
+- Nút B / ⭕                 : Rebuild Model (Ctrl + B)
+- Nút X / 🟦                 : Smart Dimension (Phím D)
+- Nút Y / 🔺                 : Mở bảng góc nhìn (Spacebar)
+- Nhấn Cần L3                : Bật/Tắt Precision Mode (Giảm 70% tốc độ soi chi tiết nhỏ)
+- Nhấn Cần R3                : Tạm dừng / Tiếp tục điều khiển
+
+3. KẾT NỐI TAY CẦM
+--------------------------------------------------
+- Flydigi Dune Fox / Xbox: Cắm Dongle 2.4G USB hoặc Cáp USB (Chế độ XInput).
+- PlayStation PS4 / PS5  : Kết nối Bluetooth hoặc Cáp USB (Chế độ DirectInput + Gyro).
+
+4. GÁN PHÍM TÙY CHỈNH (KEY MAPPER)
+--------------------------------------------------
+Vào Tab '🎮 Gán Phím Chức Năng' để chọn nhanh phím tắt SolidWorks 2019 hoặc tự gõ tổ hợp phím bất kỳ (VD: Ctrl+Alt+S, F5, Shift+E) cho 14 nút bấm.
+""",
+    "ja": """=== SOLIDMOUSE - SOLIDWORKS用 3D SPACEMOUSE コントローラー ===
+
+1. 概要と特徴
+--------------------------------------------------
+SolidMouseは、一般的なゲームパッド（Flydigi Dune Fox、Xbox、PS4/PS5）をSolidWorks専用の3D SpaceMouseに変換します。
+- 超低遅延コントロール（~1ms XInput Native API）。
+- 滑らかな画面端ラッピング（Edge Wrapping）：画面端に衝突することなく100%スムーズな3D回転。
+- SOLIDWORKS ウィンドウフォーカス機能：他のアプリ操作時は自動的にコントロールを一時停止。
+- 6軸ジャイロスコープナビゲーション：PS4/PS5コントローラーを傾けて、3Dモデルを直感的に回転！
+
+2. デフォルトコントロール配置
+--------------------------------------------------
+- 左スティック     : パン移動 (Ctrl + 中央ドラッグ)
+- 右スティック     : 3D回転 (中央ドラッグ)
+- LT / RT (L2/R2)  : ズームアウト / ズームイン (Shift + 中央ドラッグ)
+- LB / RB (L1/R1)  : ロール回転 左 / 右 (Alt + 中央ドラッグ)
+- 方向キー 上      : 等角投影図 Isometric (Ctrl + 7)
+- 方向キー 下      : 垂直面 Normal To (Ctrl + 8)
+- 方向キー 左      : 全体表示 Zoom to Fit (Fキー)
+- 方向キー 右      : 正面図 Front View (Ctrl + 1)
+- A / ❌ ボタン    : キャンセル (ESCキー)
+- B / ⭕ ボタン    : 再構築 Rebuild (Ctrl + B)
+- X / 🟦 ボタン    : スマート寸法 (Dキー)
+- Y / 🔺 ボタン    : 表示方向ダイアログ (スペースキー)
+- L3スティック押し込: 精密モード切り替え (速度30%)
+- R3スティック押し込: 一時停止 / 再開
+""",
+    "ko": """=== SOLIDMOUSE - SOLIDWORKS 3D SPACEMOUSE 컨트롤 센터 ===
+
+1. 개요 및 주요 기능
+--------------------------------------------------
+SolidMouse는 일반 게임패드(Flydigi Dune Fox, Xbox, PS4/PS5)를 SolidWorks 전용 3D SpaceMouse로 전환해 줍니다.
+- 초저지연 제어 (~1ms XInput Native API 응답).
+- 부드러운 화면 가장자리 랩핑 (Edge Wrapping): 커서 멈춤 없이 100% 연속 3D 회전.
+- SOLIDWORKS 창 감지 기능: 다른 프로그램 사용 시 3D 제어 자동 일시 정지.
+- 6축 자이로스코프 제어: PS4/PS5 컨트롤러를 실제로 기울여 3D 모델을 회전!
+
+2. 기본 컨트롤 매핑
+--------------------------------------------------
+- 왼쪽 스틱         : 평면 이동 Pan (Ctrl + 휠 드래그)
+- 오른쪽 스틱       : 3D 회전 Rotate (휠 드래그)
+- LT / RT (L2 / R2) : 축소 / 확대 Zoom (Shift + 휠 드래그)
+- LB / RB (L1 / R1) : 롤 회전 Roll Left / Right (Alt + 휠 드래그)
+- 방향키 위         : 등재 투영 Isometric (Ctrl + 7)
+- 방향키 아래       : 수직 보기 Normal To (Ctrl + 8)
+- 방향키 왼쪽       : 화면 맞춤 Zoom to Fit (F 키)
+- 방향키 오른쪽     : 정면 보기 Front View (Ctrl + 1)
+- A / ❌ 버튼       : 취소 (ESC 키)
+- B / ⭕ 버튼       : 재생성 Rebuild (Ctrl + B)
+- X / 🟦 버튼       : 지능형 치수 (D 키)
+- Y / 🔺 버튼       : 방향 창 Orientation (스페이스바)
+- L3 스틱 클릭      : 정밀 모드 토글 (30% 속도)
+- R3 스틱 클릭      : 제어 일시 중지 / 재개
+""",
+    "zh": """=== SOLIDMOUSE - SOLIDWORKS 专用 3D SPACEMOUSE 控制中心 ===
+
+1. 概述与核心功能
+--------------------------------------------------
+SolidMouse 将常规游戏手柄 (Flydigi Dune Fox、Xbox、PS4/PS5) 转换为 SolidWorks 专用 3D SpaceMouse。
+- 超低延迟控制 (~1ms XInput Native API 响应)。
+- 屏幕边缘平滑缠绕 (Edge Wrapping)：3D 旋转 100% 平滑，光标不会卡在屏幕边缘。
+- SOLIDWORKS 窗口焦点过滤：切换到其他应用时自动暂停控制，防止干扰。
+- 6 轴陀螺仪空间控制：倾斜 PS4/PS5 手柄即可在物理空间中直观旋转 3D 模型！
+
+2. 默认控制映射
+--------------------------------------------------
+- 左摇杆            : 平移视图 Pan (Ctrl + 中键拖拽)
+- 右摇杆            : 3D 旋转 Rotate (中键拖拽)
+- LT / RT (L2 / R2) : 缩小 / 放大 Zoom (Shift + 中键拖拽)
+- LB / RB (L1 / R1) : 倾斜旋转 Roll (Alt + 中键拖拽)
+- 方向键 上         : 等轴测视图 Isometric (Ctrl + 7)
+- 方向键 下         : 正视于 Normal To (Ctrl + 8)
+- 方向键 左         : 整屏显示 Zoom to Fit (F 键)
+- 方向键 右         : 前视图 Front View (Ctrl + 1)
+- A / ❌ 键         : 退出 / 取消 (ESC 键)
+- B / ⭕ 键         : 重建模型 Rebuild (Ctrl + B)
+- X / 🟦 键         : 智能尺寸 (D 键)
+- Y / 🔺 键         : 视图定向窗口 (空格键)
+- 按下 L3 摇杆      : 切换精细模式 (30% 速度)
+- 按下 R3 摇杆      : 暂停 / 恢复控制
+""",
+}
+
 
 class ApplicationGUI(tk.Tk):
     """Unified Control Center for Flydigi Dune Fox, Xbox & PlayStation PS4/PS5 Controllers with i18n support."""
 
     def __init__(self):
         super().__init__()
-        self.geometry("760x740")
+        self.geometry("780x760")
         self.resizable(True, True)
 
         if os.path.exists(ICON_ICO_PATH):
@@ -271,7 +427,14 @@ class ApplicationGUI(tk.Tk):
 
         self.notebook.tab(0, text=self.tr("tab_keys"))
         self.notebook.tab(1, text=self.tr("tab_options"))
-        self.notebook.tab(2, text=self.tr("tab_monitor"))
+        self.notebook.tab(2, text=self.tr("tab_guide"))
+        self.notebook.tab(3, text=self.tr("tab_monitor"))
+
+        # Update Guide Text
+        self.txt_guide.config(state="normal")
+        self.txt_guide.delete("1.0", tk.END)
+        self.txt_guide.insert(tk.END, GUIDE_TEXTS.get(new_lang, GUIDE_TEXTS["en"]))
+        self.txt_guide.config(state="disabled")
 
     def update_button_labels(self, is_playstation=False):
         defs = BUTTON_DEFS_PS if is_playstation else BUTTON_DEFS_XBOX
@@ -304,7 +467,7 @@ class ApplicationGUI(tk.Tk):
                 "PlayStation PS4 DualShock 4 / PS5 DualSense",
             ],
             state="readonly",
-            width=40,
+            width=36,
         )
 
         curr_mode = self.config_data.get("device_mode", "auto")
@@ -315,22 +478,34 @@ class ApplicationGUI(tk.Tk):
         else:
             self.combo_dev_mode.set("Auto Detect (Recommended)")
 
-        self.combo_dev_mode.pack(side="left", padx=10)
+        self.combo_dev_mode.pack(side="left", padx=5)
 
-        # Language Selector
-        ttk.Label(dev_frame, text="🌐 Language:", font=("Segoe UI", 10, "bold")).pack(side="left", padx=(15, 5))
+        ttk.Label(dev_frame, text="🌐 Language:", font=("Segoe UI", 10, "bold")).pack(side="left", padx=(10, 5))
         self.combo_lang = ttk.Combobox(
             dev_frame,
-            values=["English (EN)", "Tiếng Việt (VI)"],
+            values=["English (EN)", "Tiếng Việt (VI)", "日本語 (JA)", "한국어 (KO)", "中文 (ZH)"],
             state="readonly",
             width=15,
         )
-        self.combo_lang.set("English (EN)" if self.lang_code == "en" else "Tiếng Việt (VI)")
+
+        lang_map = {"en": "English (EN)", "vi": "Tiếng Việt (VI)", "ja": "日本語 (JA)", "ko": "한국어 (KO)", "zh": "中文 (ZH)"}
+        self.combo_lang.set(lang_map.get(self.lang_code, "English (EN)"))
         self.combo_lang.pack(side="left")
 
         def on_lang_change(event):
             sel = self.combo_lang.get()
-            new_lang = "en" if "English" in sel else "vi"
+            if "English" in sel:
+                new_lang = "en"
+            elif "Tiếng Việt" in sel:
+                new_lang = "vi"
+            elif "日本語" in sel:
+                new_lang = "ja"
+            elif "한국어" in sel:
+                new_lang = "ko"
+            elif "中文" in sel:
+                new_lang = "zh"
+            else:
+                new_lang = "en"
             self.change_language(new_lang)
 
         self.combo_lang.bind("<<ComboboxSelected>>", on_lang_change)
@@ -499,7 +674,18 @@ class ApplicationGUI(tk.Tk):
         self.btn_save_opt = ttk.Button(btn_opt_frame, text=self.tr("btn_save_all"), command=self.save_config)
         self.btn_save_opt.pack(side="right")
 
-        # Tab 3: Monitor
+        # Tab 3: About & User Guide
+        tab_guide = ttk.Frame(self.notebook, padding=12)
+        self.notebook.add(tab_guide, text=self.tr("tab_guide"))
+
+        self.txt_guide = tk.Text(tab_guide, height=18, font=("Consolas", 10), background="#181818", foreground="#38BDF8")
+        self.txt_guide.pack(fill="both", expand=True)
+
+        guide_content = GUIDE_TEXTS.get(self.lang_code, GUIDE_TEXTS["en"])
+        self.txt_guide.insert(tk.END, guide_content)
+        self.txt_guide.config(state="disabled")
+
+        # Tab 4: Monitor
         tab_monitor = ttk.Frame(self.notebook, padding=15)
         self.notebook.add(tab_monitor, text=self.tr("tab_monitor"))
 

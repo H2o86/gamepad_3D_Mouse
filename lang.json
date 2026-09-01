@@ -9,8 +9,9 @@
         "no_device_msg": "Please connect a Flydigi Dune Fox, Xbox, or PS4 / PS5 DualSense controller...\n",
 
         "tab_keys": "🎮 Key Mapper",
-        "tab_options": "⚙️ Window Scope & Cursor Settings",
-        "tab_monitor": "📊 Signal & Window Diagnostics",
+        "tab_options": "⚙️ Settings & Cursor",
+        "tab_guide": "📖 About & User Guide",
+        "tab_monitor": "📊 Signal & Diagnostics",
 
         "key_info": "Select SolidWorks 2019 shortcut presets or type custom key combos (e.g., Ctrl+7, Shift+E, F5):",
         "preset_placeholder": "--- Select SW2019 Shortcut Preset ---",
@@ -53,6 +54,7 @@
 
         "tab_keys": "🎮 Gán Phím Chức Năng (Key Mapper)",
         "tab_options": "⚙️ Cửa Sổ SolidWorks & Con Trỏ Chuột",
+        "tab_guide": "📖 Giới Thiệu & Hướng Dẫn Sử Dụng",
         "tab_monitor": "📊 Monitor Tín Hiệu & Window Status",
 
         "key_info": "Chọn phím tắt SolidWorks 2019 từ danh sách hoặc nhập phím tùy chỉnh (VD: Ctrl+7, Shift+E, F5):",
@@ -84,5 +86,137 @@
         "msg_reset_confirm": "Bạn có chắc chắn muốn khôi phục toàn bộ cài đặt độ nhạy & gán phím về mặc định ban đầu?",
         "msg_reset_success_title": "Khôi Phục Mặc Định",
         "msg_reset_success": "Đã đặt toàn bộ cài đặt về mặc định ban đầu!"
+    },
+    "ja": {
+        "title": "SolidMouse - 3D SpaceMouse コントロールセンター",
+        "device_profile": "コントローラープロファイル:",
+        "status_connecting": "ステータス: コントローラーに接続中...",
+        "status_connected": "ステータス: 🟢 [{dev}] ({type}) 接続完了 | SolidWorks ACTIVE",
+        "status_window_inactive": "ステータス: 🟡 [{dev}] 接続完了 | アクティブウィンドウ: [{proc}] (SolidWorksを開いて操作)",
+        "status_no_device": "ステータス: 🔴 コントローラーが見つかりません (Flydigi / Xbox / PS4 / PS5を自動検出中...)",
+        "no_device_msg": "Flydigi Dune Fox、Xbox、またはPS4 / PS5 DualSenseコントローラーを接続してください...\n",
+
+        "tab_keys": "🎮 キーマッパー (Key Mapper)",
+        "tab_options": "⚙️ 設定 & カーソル (Settings)",
+        "tab_guide": "📖 使い方 & 概要 (About & Guide)",
+        "tab_monitor": "📊 シグナル診断 (Diagnostics)",
+
+        "key_info": "SolidWorks 2019 ショートカットプリセットを選択するか、カスタムキーを入力します (例: Ctrl+7, Shift+E, F5):",
+        "preset_placeholder": "--- SW2019 ショートカットを選択 ---",
+        "btn_save_keys": "💾 キー設定を保存",
+        "btn_reset_defaults": "↺ デフォルトに戻す",
+
+        "lbl_app_filter_group": " アプリ機能制限 (App Activation) ",
+        "chk_target_app": "SOLIDWORKSウィンドウがアクティブな時のみ3D操作を有効化 (他のアプリへの干渉を防止)",
+
+        "lbl_cursor_group": " カーソル画面端ラッピング (Edge Wrapping) ",
+        "chk_lock_cursor": "画面端エッジラッピングを有効化 (画面端に触れずに滑らかな3D回転)",
+        "lbl_lock_info": "📌 操作を中断することなく連続回転が可能です。スティックを離すと元の位置に戻ります。",
+
+        "lbl_sensitivity_group": " 感度 & 6軸ジャイロ設定 (Sensitivity & Gyro) ",
+        "lbl_pan_speed": "パン速度 (左スティック):",
+        "lbl_rotate_speed": "3D回転速度 (右スティック):",
+        "lbl_zoom_speed": "ズーム速度 (LT / RT / L2 / R2):",
+        "lbl_gyro_speed": "ジャイロモーション速度 (PS4/PS5コントローラー傾き):",
+        "lbl_deadzone": "スティックデッドゾーン:",
+        "lbl_curve": "加速カーブ指数 (Curve Exponent):",
+        "btn_save_all": "💾 すべての設定を保存",
+
+        "msg_save_success_title": "設定保存",
+        "msg_save_success": "設定とコントローラープロファイルが正常に保存されました！",
+        "msg_save_error_title": "エラー",
+        "msg_save_error": "設定ファイルの保存に失敗しました: ",
+        "msg_reset_confirm_title": "リセット確認",
+        "msg_reset_confirm": "すべての設定とキー割り当てをデフォルトに戻しますか？",
+        "msg_reset_success_title": "リセット完了",
+        "msg_reset_success": "すべての設定がデフォルトに戻りました！"
+    },
+    "ko": {
+        "title": "SolidMouse - 3D SpaceMouse 컨트롤 센터",
+        "device_profile": "컨트롤러 프로필:",
+        "status_connecting": "상태: 컨트롤러 연결 중...",
+        "status_connected": "상태: 🟢 [{dev}] ({type}) 연결됨 | SolidWorks 활성화",
+        "status_window_inactive": "상태: 🟡 [{dev}] 연결됨 | 현재 창: [{proc}] (SolidWorks를 열어 조작하세요)",
+        "status_no_device": "상태: 🔴 감지된 컨트롤러 없음 (Flydigi / Xbox / PS4 / PS5 자동 검색 중...)",
+        "no_device_msg": "Flydigi Dune Fox, Xbox 또는 PS4 / PS5 DualSense 컨트롤러를 연결해 주세요...\n",
+
+        "tab_keys": "🎮 키 매퍼 (Key Mapper)",
+        "tab_options": "⚙️ 설정 & 커서 (Settings)",
+        "tab_guide": "📖 소프트웨어 소개 & 가이드 (About & Guide)",
+        "tab_monitor": "📊 진단 & 모니터 (Diagnostics)",
+
+        "key_info": "SolidWorks 2019 단축키 프리셋을 선택하거나 사용자 지정 키 조합을 입력하세요 (예: Ctrl+7, Shift+E, F5):",
+        "preset_placeholder": "--- SW2019 단축키 선택 ---",
+        "btn_save_keys": "💾 키 매핑 저장",
+        "btn_reset_defaults": "↺ 기본값으로 초기화",
+
+        "lbl_app_filter_group": " 애플리케이션 활성화 설정 ",
+        "chk_target_app": "SOLIDWORKS 창이 활성화되었을 때만 3D 조작 활성화 (다른 앱 간섭 방지)",
+
+        "lbl_cursor_group": " 커서 화면 이탈 방지 (Edge Wrapping) ",
+        "chk_lock_cursor": "화면 가장자리 랩핑 활성화 (커서 멈춤 없이 부드러운 3D 회전)",
+        "lbl_lock_info": "📌 조작 중단 없이 연속 3D 회전이 가능합니다. 스틱을 놓으면 원래 위치로 복귀합니다.",
+
+        "lbl_sensitivity_group": " 감도 및 6축 자이로 설정 ",
+        "lbl_pan_speed": "이동(Pan) 속도 (왼쪽 스틱):",
+        "lbl_rotate_speed": "3D 회전 속도 (오른쪽 스틱):",
+        "lbl_zoom_speed": "줌 속도 (LT / RT / L2 / R2):",
+        "lbl_gyro_speed": "자이로 센서 속도 (PS4/PS5 컨트롤러 기울기):",
+        "lbl_deadzone": "스틱 데드존 필터:",
+        "lbl_curve": "가속 곡선 지수:",
+        "btn_save_all": "💾 모든 설정 저장",
+
+        "msg_save_success_title": "설정 저장됨",
+        "msg_save_success": "컨트롤러 설정이 성공적으로 저장되었습니다!",
+        "msg_save_error_title": "오류",
+        "msg_save_error": "설정 파일 저장 실패: ",
+        "msg_reset_confirm_title": "초기화 확인",
+        "msg_reset_confirm": "모든 감도 및 키 매핑을 기본 설정으로 초기화하시겠습니까?",
+        "msg_reset_success_title": "초기화 완료",
+        "msg_reset_success": "모든 설정이 기본값으로 초기화되었습니다!"
+    },
+    "zh": {
+        "title": "SolidMouse - 3D SpaceMouse 控制中心",
+        "device_profile": "控制器配置文件:",
+        "status_connecting": "状态: 正在连接控制器...",
+        "status_connected": "状态: 🟢 [{dev}] ({type}) 已连接 | SolidWorks 已激活",
+        "status_window_inactive": "状态: 🟡 [{dev}] 已连接 | 当前窗口: [{proc}] (请打开SolidWorks进行操作)",
+        "status_no_device": "状态: 🔴 未检测到控制器 (正在自动检测 Flydigi / Xbox / PS4 / PS5...)",
+        "no_device_msg": "请连接 Flydigi Dune Fox、Xbox 或 PS4 / PS5 DualSense 控制器...\n",
+
+        "tab_keys": "🎮 键位映射 (Key Mapper)",
+        "tab_options": "⚙️ 设置与光标 (Settings)",
+        "tab_guide": "📖 关于与使用指南 (About & Guide)",
+        "tab_monitor": "📊 信号与状态诊断 (Diagnostics)",
+
+        "key_info": "选择 SolidWorks 2019 快捷键预设或输入自定义按键组合 (例如: Ctrl+7, Shift+E, F5):",
+        "preset_placeholder": "--- 选择 SW2019 快捷键预设 ---",
+        "btn_save_keys": "💾 保存按键映射",
+        "btn_reset_defaults": "↺ 恢复默认设置",
+
+        "lbl_app_filter_group": " 应用程序激活设置 ",
+        "chk_target_app": "仅在 SOLIDWORKS 窗口激活时启用 3D 控制 (防止干扰其他应用)",
+
+        "lbl_cursor_group": " 光标防卡边设置 (Edge Wrapping) ",
+        "chk_lock_cursor": "启用屏幕边缘平滑缠绕 (3D 旋转 100% 平滑，不会卡在屏幕边缘)",
+        "lbl_lock_info": "📌 无需中断即可连续旋转模型。松开摇杆时，光标会自动恢复到初始位置。",
+
+        "lbl_sensitivity_group": " 灵敏度与 6 轴陀螺仪设置 ",
+        "lbl_pan_speed": "平移速度 (左摇杆):",
+        "lbl_rotate_speed": "3D 旋转速度 (右摇杆):",
+        "lbl_zoom_speed": "缩放速度 (LT / RT / L2 / R2):",
+        "lbl_gyro_speed": "陀螺仪感应速度 (倾斜 PS4/PS5 手柄):",
+        "lbl_deadzone": "摇杆死区过滤:",
+        "lbl_curve": "加速度曲线指数:",
+        "btn_save_all": "💾 保存所有设置",
+
+        "msg_save_success_title": "设置已保存",
+        "msg_save_success": "控制器配置与按键映射已成功保存！",
+        "msg_save_error_title": "错误",
+        "msg_save_error": "保存配置文件失败: ",
+        "msg_reset_confirm_title": "确认恢复默认",
+        "msg_reset_confirm": "您确定要将所有灵敏度与按键映射恢复为初始默认设置吗？",
+        "msg_reset_success_title": "恢复完成",
+        "msg_reset_success": "所有设置已成功恢复为默认值！"
     }
 }

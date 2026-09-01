@@ -3,6 +3,7 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Windows%2010%2F11-brightgreen.svg)]()
 [![SolidWorks](https://img.shields.io/badge/SolidWorks-2019%2B-orange.svg)]()
+[![Languages](https://img.shields.io/badge/languages-EN%20%7C%20VI%20%7C%20JA%20%7C%20KO%20%7C%20ZH-purple.svg)]()
 
 Convert your **Flydigi Dune Fox**, **Xbox**, or **PlayStation (PS4 DualShock 4 / PS5 DualSense)** gamepad into a dedicated **3D SpaceMouse for SolidWorks**!
 
@@ -10,10 +11,21 @@ Convert your **Flydigi Dune Fox**, **Xbox**, or **PlayStation (PS4 DualShock 4 /
 
 ---
 
-## 🌐 Language / Ngôn Ngữ
-- **English**: Fully supported UI, preset shortcuts, and instructions.
-- **Tiếng Việt**: Hỗ trợ đầy đủ giao diện và phím tắt SolidWorks 2019.
-- *Switch languages live directly inside the Application GUI!*
+## 🌐 Supported Languages / 言語 / 언어 / 语言 / Ngôn Ngữ
+
+SolidMouse supports 5 international languages with live in-app switching:
+- 🇺🇸 **English (EN)**
+- 🇻🇳 **Tiếng Việt (VI)**
+- 🇯🇵 **日本語 (JA)**
+- 🇰🇷 **한국어 (KO)**
+- 🇨🇳 **中文 (ZH)**
+
+---
+
+## 📖 In-App User Guide & About Section
+
+SolidMouse now features a dedicated **`📖 About & User Guide`** tab directly inside the software interface.
+Switching your language automatically updates the user guide, default control map diagrams, connection steps, and troubleshooting tips!
 
 ---
 
@@ -54,13 +66,3 @@ Directly run **[`dist/SolidMouse.exe`](dist/SolidMouse.exe)** (No Python install
 ```bash
 python gui.py
 ```
-
----
-
-## 🇻🇳 Tính Năng Nổi Bật (Tiếng Việt)
-
-1. **Bộ Cài Đặt Tự Động Windows Installer (`SolidMouse_Setup_v1.0.0.exe`):** Cài đặt nhanh chóng vào máy tính, tạo shortcut Desktop, Start Menu và tự động chạy cùng Windows.
-2. **Hỗ Trợ Đa Tay Cầm (Xbox / Flydigi / PS4 / PS5):** Tự động phát hiện loại tay cầm đang kết nối.
-3. **Cảm Biến Con Quay Hồi Chuyển (Gyro 6DoF):** Nghiêng tay cầm PS4/PS5 để xoay mô hình 3D SolidWorks theo góc nghiêng bàn tay.
-4. **Chống Con Trỏ Chuột Văng Viền Màn Hình (Edge Wrapping):** Xoay mô hình mượt 100% không bị đứng hay gián đoạn lệnh.
-5. **Giao Diện Đa Ngôn Ngữ (Anh / Việt):** Chuyển đổi ngôn ngữ trực tiếp trong ứng dụng.
