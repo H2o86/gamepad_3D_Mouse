@@ -223,7 +223,7 @@ def apply_deadzone_and_curve(val, deadzone=0.15, exponent=1.8):
 
 
 class SolidWorksNavigator:
-    """Translates controller state to SolidWorks 3D viewport navigation, smooth edge wrapping, and window filtering."""
+    """Translates controller state to SolidWorks 3D viewport navigation, Gyroscope 6DoF, and window filtering."""
 
     def __init__(self, config):
         self.config = config
@@ -238,7 +238,6 @@ class SolidWorksNavigator:
         self.acc_x = 0.0
         self.acc_y = 0.0
 
-        # Saved cursor position before dragging started
         self.start_cursor_pos = (0, 0)
         self.prev_buttons = {}
 
@@ -269,7 +268,6 @@ class SolidWorksNavigator:
             self._release_all()
             return
 
-        # Check Active Window Filter
         if not self.is_solidworks_active():
             if self.mmb_down:
                 self._release_all()
@@ -284,7 +282,6 @@ class SolidWorksNavigator:
 
         keymap = self.config.get("keymap", {})
 
-        # Process button click shortcuts
         for btn_key, is_just_pressed in just_pressed.items():
             if not is_just_pressed:
                 continue
@@ -306,7 +303,6 @@ class SolidWorksNavigator:
         if self.paused:
             return
 
-        # Retrieve analog inputs with deadzone & curve
         dz_stick = self.config["deadzone"]["left_stick"]
         dz_trig = self.config["deadzone"]["trigger"]
         exp = self.config["curve"]["exponent"]
@@ -326,6 +322,15 @@ class SolidWorksNavigator:
 
         rot_x = rx * self.config["sensitivity"]["rotate"] * mult
         rot_y = -ry * self.config["sensitivity"]["rotate"] * mult
+
+        # PlayStation Gyro Navigation support
+        gyro_pitch = state.get("gyro_pitch", 0.0)
+        gyro_yaw = state.get("gyro_yaw", 0.0)
+        gyro_mult = self.config.get("sensitivity", {}).get("gyro", 15.0)
+
+        if abs(gyro_pitch) > 0.05 or abs(gyro_yaw) > 0.05:
+            rot_x += gyro_yaw * gyro_mult * mult
+            rot_y += gyro_pitch * gyro_mult * mult
 
         zoom_val = (rt - lt) * self.config["sensitivity"]["zoom"] * mult
 
@@ -362,7 +367,6 @@ class SolidWorksNavigator:
             target_dx = rot_x
             target_dy = rot_y
 
-        # Manage Modifier Key States
         if target_ctrl != self.ctrl_down:
             send_key_event(VK_MAP["CTRL"], key_up=not target_ctrl)
             self.ctrl_down = target_ctrl
@@ -381,7 +385,6 @@ class SolidWorksNavigator:
         sw, sh = get_screen_size()
         center_x, center_y = sw // 2, sh // 2
 
-        # Manage MMB Down/Up State
         if is_moving and not self.mmb_down:
             self.start_cursor_pos = get_cursor_pos()
             send_mouse_event(MOUSEEVENTF_MIDDLEDOWN)
@@ -394,10 +397,8 @@ class SolidWorksNavigator:
             self._release_modifiers()
 
             if lock_mode:
-                # Restore cursor back to original position when releasing the stick
                 set_cursor_pos(self.start_cursor_pos[0], self.start_cursor_pos[1])
 
-        # Perform Sub-pixel Mouse Displacement
         if is_moving:
             self.acc_x += target_dx
             self.acc_y += target_dy
@@ -410,10 +411,9 @@ class SolidWorksNavigator:
                 self.acc_x -= move_x
                 self.acc_y -= move_y
 
-            # Smooth Edge Wrapping: Only warp cursor to center if it approaches monitor borders
             if lock_mode:
                 cur_x, cur_y = get_cursor_pos()
-                margin = 100  # 100px buffer from screen edges
+                margin = 100
                 if cur_x < margin or cur_x > sw - margin or cur_y < margin or cur_y > sh - margin:
                     set_cursor_pos(center_x, center_y)
 
