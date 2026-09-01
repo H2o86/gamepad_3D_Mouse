@@ -29,11 +29,12 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
-Name: "autostarticon"; Description: "Tự động chạy cùng Windows khi khởi động (Run on Windows Startup)"; GroupDescription: "Cấu hình khởi động:"
+Name: "autostarticon"; Description: "Run on Windows Startup (Tự động chạy cùng Windows)"; GroupDescription: "Startup Settings:"
 
 [Files]
 Source: "dist\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "config.json"; DestDir: "{app}"; Flags: ignoreversion
+Source: "lang.json"; DestDir: "{app}"; Flags: ignoreversion
 Source: "sw_shortcuts.json"; DestDir: "{app}"; Flags: ignoreversion
 Source: "assets\*"; DestDir: "{app}\assets"; Flags: ignoreversion recursesubdirs createallsubdirs
 

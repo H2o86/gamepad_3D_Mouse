@@ -1,47 +1,66 @@
 # SolidMouse - Unified 3D SpaceMouse Control Center
 
-Phần mềm đóng gói chuyển đổi tay cầm **Flydigi Dune Fox**, **Xbox**, và **PlayStation PS4 (DualShock 4) / PS5 (DualSense)** thành thiết bị **3D SpaceMouse chuyên dụng cho SolidWorks**.
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-Windows%2010%2F11-brightgreen.svg)]()
+[![SolidWorks](https://img.shields.io/badge/SolidWorks-2019%2B-orange.svg)]()
+
+Convert your **Flydigi Dune Fox**, **Xbox**, or **PlayStation (PS4 DualShock 4 / PS5 DualSense)** gamepad into a dedicated **3D SpaceMouse for SolidWorks**!
+
+![SolidMouse App Icon](assets/icon.png)
 
 ---
 
-## 🌟 Tính Năng Nổi Bật
-
-1. **Bộ Cài Đặt Tự Động Windows Installer (`SolidMouse_Setup_v1.0.0.exe`):**
-   - Đã được tạo bộ cài đặt tự động chuyên nghiệp bằng Inno Setup.
-   - Cài đặt nhanh chóng vào `C:\Program Files\SolidMouse`.
-   - **Tự động tạo phím tắt Desktop (Desktop Shortcut)** & **Start Menu**.
-   - **Tự động đăng ký khởi động cùng Windows (Startup)** nếu chọn.
-   - Tích hợp trình gỡ cài đặt chuẩn Windows (Control Panel / Settings Uninstall).
-
-2. **Hỗ Trợ Đa Tay Cầm (Unified Multi-Controller Support):**
-   - **Flydigi Dune Fox / Xbox Controllers:** Chạy qua luồng Native Windows `XInput` với độ trễ siêu thấp (~1ms).
-   - **PlayStation PS4 (DualShock 4) & PS5 (DualSense):** Chạy qua luồng DirectInput & HID Engine.
-   - **Tự động nhận diện thiết bị (Auto Detect):** Tự chuyển đổi cấu hình phù hợp với loại tay cầm bạn đang cắm.
-
-3. **Cảm Biến Con Quay Hồi Chuyển (6-Axis Gyroscope Navigation):**
-   - Trên tay cầm PS4/PS5: Cho phép **giữ nút L2 (hoặc nghiêng tay cầm)** để xoay mô hình 3D trong SolidWorks trực quan theo chuyển động thực tế trong không gian!
-
-4. **Lọc Cửa Sổ SolidWorks (Window Scope Filter):**
-   - Chỉ kích hoạt điều khiển khi cửa sổ **SOLIDWORKS** đang mở và được chọn. Tự động tạm dừng khi bạn chuyển sang ứng dụng khác.
-
-5. **Khóa Con Trỏ Chuột Chống Văng Viền (Edge Border Wrapping):**
-   - Giữ luồng xoay 3D mượt 100% không bị gián đoạn hay giật khựng. Tự động trả con trỏ chuột về vị trí ban đầu khi thả gạt.
-
-6. **Bộ Gán Phím Chức Năng Tùy Chỉnh (Custom Key Mapper):**
-   - Tự do gán phím tắt SolidWorks 2019 từ file `SW Shortkey.pdf` hoặc nhập phím tùy chỉnh cho 14 nút bấm.
-   - Tự động thay đổi nhãn nút bấm phù hợp với nhãn tay cầm: Xbox ($A/B/X/Y$) hay PlayStation ($\times/\bigcirc/\square/\Delta$).
+## 🌐 Language / Ngôn Ngữ
+- **English**: Fully supported UI, preset shortcuts, and instructions.
+- **Tiếng Việt**: Hỗ trợ đầy đủ giao diện và phím tắt SolidWorks 2019.
+- *Switch languages live directly inside the Application GUI!*
 
 ---
 
-## 🚀 Hướng Dẫn Cài Đặt & Sử Dụng
+## 🌟 Key Features
 
-### Cách 1: Cài Đặt Tự Động (Khuyên dùng cho người dùng cuối)
-Chạy bộ cài đặt **[`installer_dist/SolidMouse_Setup_v1.0.0.exe`](file:///g:/My%20Drive/0-My%20Project/gamepad_3D_Mouse/installer_dist/SolidMouse_Setup_v1.0.0.exe)** để tự động cài phần mềm vào Windows.
+1. **Unified Multi-Controller Engine:**
+   - **Xbox & Flydigi Dune Fox Controllers:** Powered by Native Windows `XInput` with ~1ms ultra-low latency.
+   - **PlayStation PS4 / PS5 Controllers:** Powered by DirectInput & HID Engine.
+   - **Auto Device Detection:** Seamlessly switches profiles depending on connected gamepad.
 
-### Cách 2: Chạy File Thực Thi Độc Lập `.exe`
-Double click trực tiếp vào file **[`dist/SolidMouse.exe`](file:///g:/My%20Drive/0-My%20Project/gamepad_3D_Mouse/dist/SolidMouse.exe)**.
+2. **6-Axis Gyroscope Navigation (PS4 / PS5 Motion Control):**
+   - Tilt and rotate your PS4 DualShock 4 or PS5 DualSense controller to rotate 3D CAD models in SolidWorks naturally in physical space!
 
-### Cách 3: Chạy Từ Mã Nguồn Python
+3. **Smooth Cursor Edge Wrapping (Anti-Border Drift):**
+   - Keeps 3D viewport rotation 100% smooth without cursor border collisions or stuttering. Automatically restores cursor to initial position when releasing joysticks.
+
+4. **SOLIDWORKS Window Focus Filtering:**
+   - Automatically activates 3D navigation only when the **SOLIDWORKS** window is active, avoiding interference with other applications.
+
+5. **Customizable Key Mapper & Preset Library:**
+   - Built-in SolidWorks 2019 shortcut catalog from `SW Shortkey.pdf` (Isometric `Ctrl+7`, Normal To `Ctrl+8`, Smart Dimension `D`, Line `L`, Extrude `E`, Rebuild `Ctrl+B`, Undo `Ctrl+Z`, Hide Component `TAB`, etc.).
+   - Rebind all 14 controller buttons with custom key combinations.
+
+---
+
+## 🚀 Download & Installation
+
+### Option 1: Automatic Windows Installer (Recommended for end-users)
+Download and run **[`installer_dist/SolidMouse_Setup_v1.0.0.exe`](installer_dist/SolidMouse_Setup_v1.0.0.exe)**.
+- Installs to `C:\Program Files\SolidMouse`.
+- Creates Desktop & Start Menu shortcuts.
+- Optional Windows Startup autostart.
+
+### Option 2: Standalone Executable
+Directly run **[`dist/SolidMouse.exe`](dist/SolidMouse.exe)** (No Python installation required).
+
+### Option 3: Run from Python Source
 ```bash
 python gui.py
 ```
+
+---
+
+## 🇻🇳 Tính Năng Nổi Bật (Tiếng Việt)
+
+1. **Bộ Cài Đặt Tự Động Windows Installer (`SolidMouse_Setup_v1.0.0.exe`):** Cài đặt nhanh chóng vào máy tính, tạo shortcut Desktop, Start Menu và tự động chạy cùng Windows.
+2. **Hỗ Trợ Đa Tay Cầm (Xbox / Flydigi / PS4 / PS5):** Tự động phát hiện loại tay cầm đang kết nối.
+3. **Cảm Biến Con Quay Hồi Chuyển (Gyro 6DoF):** Nghiêng tay cầm PS4/PS5 để xoay mô hình 3D SolidWorks theo góc nghiêng bàn tay.
+4. **Chống Con Trỏ Chuột Văng Viền Màn Hình (Edge Wrapping):** Xoay mô hình mượt 100% không bị đứng hay gián đoạn lệnh.
+5. **Giao Diện Đa Ngôn Ngữ (Anh / Việt):** Chuyển đổi ngôn ngữ trực tiếp trong ứng dụng.

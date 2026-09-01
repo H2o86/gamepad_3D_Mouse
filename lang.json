@@ -1,0 +1,88 @@
+{
+    "en": {
+        "title": "SolidMouse - 3D SpaceMouse Control Center",
+        "device_profile": "Device Profile:",
+        "status_connecting": "Status: Connecting controller...",
+        "status_connected": "Status: 🟢 Connected [{dev}] ({type}) | SolidWorks ACTIVE",
+        "status_window_inactive": "Status: 🟡 [{dev}] Connected | Active Window: [{proc}] (Open SolidWorks to control)",
+        "status_no_device": "Status: 🔴 No controller detected (Auto-Detecting Flydigi / Xbox / PS4 / PS5...)",
+        "no_device_msg": "Please connect a Flydigi Dune Fox, Xbox, or PS4 / PS5 DualSense controller...\n",
+
+        "tab_keys": "🎮 Key Mapper",
+        "tab_options": "⚙️ Window Scope & Cursor Settings",
+        "tab_monitor": "📊 Signal & Window Diagnostics",
+
+        "key_info": "Select SolidWorks 2019 shortcut presets or type custom key combos (e.g., Ctrl+7, Shift+E, F5):",
+        "preset_placeholder": "--- Select SW2019 Shortcut Preset ---",
+        "btn_save_keys": "💾 Save Key Mappings",
+        "btn_reset_defaults": "↺ Reset to Defaults",
+
+        "lbl_app_filter_group": " Application Focus Activation ",
+        "chk_target_app": "Only activate 3D control when SOLIDWORKS window is active (Prevents interfering with other apps)",
+
+        "lbl_cursor_group": " Cursor Anti-Border Drift (Edge Wrapping) ",
+        "chk_lock_cursor": "Enable Edge Border Wrapping (100% smooth 3D rotation, prevents cursor from hitting monitor edge)",
+        "lbl_lock_info": "📌 Allows continuous 3D rotation without interruption. When joystick is released, cursor returns to original position.",
+
+        "lbl_sensitivity_group": " Sensitivity & Gyroscope 6DoF Tuning ",
+        "lbl_pan_speed": "Pan Speed (Left Stick):",
+        "lbl_rotate_speed": "Rotate 3D Speed (Right Stick):",
+        "lbl_zoom_speed": "Zoom Speed (LT / RT / L2 / R2):",
+        "lbl_gyro_speed": "Gyroscope Motion Speed (Tilt PS4/PS5 Controller):",
+        "lbl_deadzone": "Stick Deadzone Filter:",
+        "lbl_curve": "Acceleration Curve Exponent:",
+        "btn_save_all": "💾 Save All Settings",
+
+        "msg_save_success_title": "Settings Saved",
+        "msg_save_success": "Configuration and controller settings updated successfully!",
+        "msg_save_error_title": "Error",
+        "msg_save_error": "Failed to save configuration file: ",
+        "msg_reset_confirm_title": "Confirm Reset",
+        "msg_reset_confirm": "Are you sure you want to reset all sensitivity, cursor, and key mappings to original factory defaults?",
+        "msg_reset_success_title": "Reset Complete",
+        "msg_reset_success": "All settings and keybindings have been restored to defaults!"
+    },
+    "vi": {
+        "title": "SolidMouse - Trung Tâm Điều Khiển 3D SpaceMouse",
+        "device_profile": "Loại Tay Cầm (Device Profile):",
+        "status_connecting": "Trạng thái: Đang kết nối tay cầm...",
+        "status_connected": "Trạng thái: 🟢 Đã kết nối [{dev}] ({type}) | SolidWorks ACTIVE",
+        "status_window_inactive": "Trạng thái: 🟡 [{dev}] Đã kết nối | Cửa sổ: [{proc}] (Mở SolidWorks để điều khiển)",
+        "status_no_device": "Trạng thái: 🔴 Không tìm thấy tay cầm (Auto-Detecting Flydigi / Xbox / PS4 / PS5...)",
+        "no_device_msg": "Vui lòng cắm tay cầm Flydigi Dune Fox, Xbox, hoặc PS4 / PS5 DualSense...\n",
+
+        "tab_keys": "🎮 Gán Phím Chức Năng (Key Mapper)",
+        "tab_options": "⚙️ Cửa Sổ SolidWorks & Con Trỏ Chuột",
+        "tab_monitor": "📊 Monitor Tín Hiệu & Window Status",
+
+        "key_info": "Chọn phím tắt SolidWorks 2019 từ danh sách hoặc nhập phím tùy chỉnh (VD: Ctrl+7, Shift+E, F5):",
+        "preset_placeholder": "--- Chọn phím tắt SW2019 ---",
+        "btn_save_keys": "💾 Lưu Phím Cấu Hình",
+        "btn_reset_defaults": "↺ Đặt Về Mặc Định",
+
+        "lbl_app_filter_group": " Chế Độ Kích Hoạt Phần Mềm ",
+        "chk_target_app": "Chỉ kích hoạt điều khiển khi bật cửa sổ SOLIDWORKS (Ngăn ảnh hưởng ứng dụng khác)",
+
+        "lbl_cursor_group": " Chế Độ Con Trỏ Chuột (Cursor Anti-Border Drift) ",
+        "chk_lock_cursor": "Chống con trỏ văng viền màn hình (Edge Wrapping - Giúp xoay mượt 100%, không bị giật)",
+        "lbl_lock_info": "📌 Giúp xoay liên tục không bị gián đoạn lệnh. Khi thả cần gạt, con trỏ tự động trả về vị trí ban đầu.",
+
+        "lbl_sensitivity_group": " Tùy Chỉnh Độ Nhạy & Gyro 6DoF ",
+        "lbl_pan_speed": "Tốc độ Pan (Left Stick):",
+        "lbl_rotate_speed": "Tốc độ Rotate 3D (Right Stick):",
+        "lbl_zoom_speed": "Tốc độ Zoom (LT / RT / L2 / R2):",
+        "lbl_gyro_speed": "Tốc độ Gyroscope (Nghiêng tay cầm PS4/PS5):",
+        "lbl_deadzone": "Lọc Deadzone chống trôi:",
+        "lbl_curve": "Đường cong gia tốc (Curve):",
+        "btn_save_all": "💾 Lưu Cài Đặt Tất Cả",
+
+        "msg_save_success_title": "Lưu Cấu Hình",
+        "msg_save_success": "Đã lưu cài đặt & cấu hình đa tay cầm thành công!",
+        "msg_save_error_title": "Lỗi",
+        "msg_save_error": "Không thể lưu file cấu hình: ",
+        "msg_reset_confirm_title": "Xác Nhận Khôi Phục",
+        "msg_reset_confirm": "Bạn có chắc chắn muốn khôi phục toàn bộ cài đặt độ nhạy & gán phím về mặc định ban đầu?",
+        "msg_reset_success_title": "Khôi Phục Mặc Định",
+        "msg_reset_success": "Đã đặt toàn bộ cài đặt về mặc định ban đầu!"
+    }
+}
