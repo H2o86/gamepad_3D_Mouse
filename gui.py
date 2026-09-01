@@ -8,9 +8,22 @@ from tkinter import ttk, messagebox
 from inputs_manager import UnifiedControllerManager
 from solidworks_mouse import SolidWorksNavigator, get_foreground_window_info
 
-CONFIG_PATH = os.path.join(os.path.dirname(__file__), "config.json")
-PRESETS_PATH = os.path.join(os.path.dirname(__file__), "sw_shortcuts.json")
-ICON_ICO_PATH = os.path.join(os.path.dirname(__file__), "assets", "icon.ico")
+
+def get_base_dir():
+    if getattr(sys, "frozen", False):
+        return os.path.dirname(sys.executable)
+    return os.path.dirname(os.path.abspath(__file__))
+
+
+def get_resource_path(relative_path):
+    if hasattr(sys, "_MEIPASS"):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(get_base_dir(), relative_path)
+
+
+CONFIG_PATH = os.path.join(get_base_dir(), "config.json")
+PRESETS_PATH = get_resource_path("sw_shortcuts.json")
+ICON_ICO_PATH = get_resource_path(os.path.join("assets", "icon.ico"))
 
 BUTTON_DEFS_XBOX = [
     ("button_dpad_up", "D-Pad Up (Lên)"),
@@ -81,7 +94,7 @@ class ApplicationGUI(tk.Tk):
 
     def __init__(self):
         super().__init__()
-        self.title("Unified 3D SpaceMouse Control Center (Flydigi & PlayStation PS4/PS5)")
+        self.title("SolidMouse - Unified 3D SpaceMouse Control Center")
         self.geometry("760x730")
         self.resizable(True, True)
 
@@ -140,7 +153,6 @@ class ApplicationGUI(tk.Tk):
         return options
 
     def save_config(self):
-        # Update device mode
         mode_str = self.combo_dev_mode.get()
         if "PlayStation" in mode_str:
             self.config_data["device_mode"] = "playstation"
@@ -151,7 +163,6 @@ class ApplicationGUI(tk.Tk):
 
         self.controller_mgr.set_mode(self.config_data["device_mode"])
 
-        # Sensitivity
         self.config_data["sensitivity"]["pan"] = round(self.slider_pan.get(), 1)
         self.config_data["sensitivity"]["rotate"] = round(self.slider_rotate.get(), 1)
         self.config_data["sensitivity"]["zoom"] = round(self.slider_zoom.get(), 1)
@@ -159,11 +170,9 @@ class ApplicationGUI(tk.Tk):
         self.config_data["deadzone"]["left_stick"] = round(self.slider_deadzone.get(), 2)
         self.config_data["curve"]["exponent"] = round(self.slider_curve.get(), 2)
 
-        # Filter
         self.config_data["app_filter"]["target_app_only"] = self.var_target_only.get()
         self.config_data["app_filter"]["lock_cursor_center"] = self.var_lock_cursor.get()
 
-        # Keymap
         keymap = {}
         for key_id, _ in BUTTON_DEFS_XBOX:
             val = self.entry_widgets[key_id].get().strip()
@@ -221,12 +230,11 @@ class ApplicationGUI(tk.Tk):
 
         lbl_title = ttk.Label(
             header,
-            text="Unified 3D SpaceMouse Control Center (Flydigi & PlayStation)",
+            text="SolidMouse - 3D SpaceMouse Control Center (Flydigi & PlayStation)",
             font=("Segoe UI", 13, "bold"),
         )
         lbl_title.pack(anchor="w")
 
-        # Device Mode selector in Header
         dev_frame = ttk.Frame(header, padding=(0, 5, 0, 0))
         dev_frame.pack(fill="x")
 
@@ -425,7 +433,6 @@ class ApplicationGUI(tk.Tk):
             if state:
                 dev_type = state.get("device_type", "xinput")
                 dev_name = state.get("device_name", "Gamepad")
-                is_ps = dev_type == "playstation"
 
                 if is_sw_active:
                     status_str = f"🟢 Đã kết nối [{dev_name}] ({dev_type.upper()}) | SolidWorks ACTIVE"
