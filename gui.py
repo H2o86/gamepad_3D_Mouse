@@ -10,6 +10,7 @@ from solidworks_mouse import SolidWorksNavigator, get_foreground_window_info
 
 CONFIG_PATH = os.path.join(os.path.dirname(__file__), "config.json")
 PRESETS_PATH = os.path.join(os.path.dirname(__file__), "sw_shortcuts.json")
+ICON_ICO_PATH = os.path.join(os.path.dirname(__file__), "assets", "icon.ico")
 
 BUTTON_DEFS = [
     ("button_dpad_up", "D-Pad Up (Lên)"),
@@ -37,6 +38,13 @@ class ApplicationGUI(tk.Tk):
         self.title("Flydigi Dune Fox - SolidWorks 3D SpaceMouse Control Center")
         self.geometry("740x700")
         self.resizable(True, True)
+
+        # Set Window Icon
+        if os.path.exists(ICON_ICO_PATH):
+            try:
+                self.iconbitmap(ICON_ICO_PATH)
+            except Exception:
+                pass
 
         self.style = ttk.Style(self)
         self.style.theme_use("clam")
