@@ -1,0 +1,8 @@
+{
+    "version": "1.0.0",
+    "release_date": "2026-09-02",
+    "repo_url": "https://github.com/H2o86/gamepad_3D_Mouse",
+    "download_url": "https://github.com/H2o86/gamepad_3D_Mouse/releases",
+    "installer_url": "https://github.com/H2o86/gamepad_3D_Mouse/blob/main/installer_dist/SolidMouse_Setup_v1.0.0.exe",
+    "changelog": "Official release v1.0.0 with 5-language i18n (EN, VI, JA, KO, ZH), PlayStation PS4/PS5 Gyro 6DoF, Edge Border Wrapping, System Tray, Global Hotkey Ctrl+Alt+S, and Config Backup/Restore."
+}

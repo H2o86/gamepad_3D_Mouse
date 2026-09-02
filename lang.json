@@ -19,6 +19,7 @@
         "btn_backup_config": "📦 Backup Config",
         "btn_restore_config": "📂 Restore Config",
         "btn_reset_defaults": "↺ Reset Factory Defaults",
+        "btn_check_update": "🔄 Check for Updates",
 
         "lbl_app_filter_group": " Application Focus Activation ",
         "chk_target_app": "Only activate 3D control when SOLIDWORKS window is active (Prevents interfering with other apps)",
@@ -39,6 +40,7 @@
         "tray_show": "🖥️ Open SolidMouse Window (Ctrl+Alt+S)",
         "tray_pause": "⏸️ Pause 3D Navigation",
         "tray_resume": "▶️ Resume 3D Navigation",
+        "tray_update": "🔄 Check for Updates",
         "tray_exit": "❌ Exit SolidMouse",
         "tray_minimized_title": "SolidMouse Running Minimized",
         "tray_minimized_msg": "SolidMouse is running silently in the System Tray. Press Ctrl+Alt+S or click tray icon to open GUI.",
@@ -56,7 +58,14 @@
         "msg_reset_confirm_title": "Confirm Reset",
         "msg_reset_confirm": "Are you sure you want to reset all sensitivity, cursor, and key mappings to original factory defaults?",
         "msg_reset_success_title": "Reset Complete",
-        "msg_reset_success": "All settings and keybindings have been restored to defaults!"
+        "msg_reset_success": "All settings and keybindings have been restored to defaults!",
+
+        "msg_update_latest_title": "SolidMouse Up to Date",
+        "msg_update_latest_msg": "You are currently running the latest version of SolidMouse (v1.0.0).",
+        "msg_update_avail_title": "New Version Available!",
+        "msg_update_avail_msg": "A new version ({ver}) of SolidMouse is available on GitHub!\n\nChangelog:\n{log}\n\nWould you like to open the release download page now?",
+        "msg_update_error_title": "Update Check Failed",
+        "msg_update_error_msg": "Could not connect to GitHub repository. Please check your internet connection."
     },
     "vi": {
         "title": "SolidMouse - Trung Tâm Điều Khiển 3D SpaceMouse",
@@ -78,6 +87,7 @@
         "btn_backup_config": "📦 Sao Lưu Backup",
         "btn_restore_config": "📂 Phục Hồi Restore",
         "btn_reset_defaults": "↺ Khôi Phục Mặc Định",
+        "btn_check_update": "🔄 Kiểm Tra Cập Nhật",
 
         "lbl_app_filter_group": " Chế Độ Kích Hoạt Phần Mềm ",
         "chk_target_app": "Chỉ kích hoạt điều khiển khi bật cửa sổ SOLIDWORKS (Ngăn ảnh hưởng ứng dụng khác)",
@@ -98,6 +108,7 @@
         "tray_show": "🖥️ Mở Giao Diện SolidMouse (Ctrl+Alt+S)",
         "tray_pause": "⏸️ Tạm Dừng Điều Khiển 3D",
         "tray_resume": "▶️ Tiếp Tục Điều Khiển 3D",
+        "tray_update": "🔄 Kiểm Tra Cập Nhật Từ GitHub",
         "tray_exit": "❌ Thoát Ứng Dụng SolidMouse",
         "tray_minimized_title": "SolidMouse Đang Chạy Ẩn",
         "tray_minimized_msg": "SolidMouse đang chạy ngầm ở Khay Hệ Thống (Taskbar). Nhấn Ctrl+Alt+S hoặc click vào icon khay để mở giao diện.",
@@ -115,7 +126,14 @@
         "msg_reset_confirm_title": "Xác Nhận Khôi Phục",
         "msg_reset_confirm": "Bạn có chắc chắn muốn khôi phục toàn bộ cài đặt độ nhạy & gán phím về mặc định ban đầu?",
         "msg_reset_success_title": "Khôi Phục Mặc Định",
-        "msg_reset_success": "Đã đặt toàn bộ cài đặt về mặc định ban đầu!"
+        "msg_reset_success": "Đã đặt toàn bộ cài đặt về mặc định ban đầu!",
+
+        "msg_update_latest_title": "Đã Là Bản Mới Nhất",
+        "msg_update_latest_msg": "Bạn đang sử dụng phiên bản SolidMouse mới nhất (v1.0.0).",
+        "msg_update_avail_title": "Có Bản Cập Nhật Mới!",
+        "msg_update_avail_msg": "Đã có phiên bản mới ({ver}) trên GitHub Repo!\n\nNội dung cập nhật:\n{log}\n\nBạn có muốn mở trang tải bản cập nhật ngay bây giờ?",
+        "msg_update_error_title": "Lỗi Kiểm Tra Cập Nhật",
+        "msg_update_error_msg": "Không thể kết nối đến kho lưu trữ GitHub. Vui lòng kiểm tra kết nối Internet."
     },
     "ja": {
         "title": "SolidMouse - 3D SpaceMouse コントロールセンター",
@@ -137,6 +155,7 @@
         "btn_backup_config": "📦 バックアップ出力",
         "btn_restore_config": "📂 バックアップ復元",
         "btn_reset_defaults": "↺ デフォルトに戻す",
+        "btn_check_update": "🔄 アップデート確認",
 
         "lbl_app_filter_group": " アプリ機能制限 (App Activation) ",
         "chk_target_app": "SOLIDWORKSウィンドウがアクティブな時のみ3D操作を有効化",
@@ -157,6 +176,7 @@
         "tray_show": "🖥️ SolidMouse ウィンドウを開く (Ctrl+Alt+S)",
         "tray_pause": "⏸️ 3D操作を一時停止",
         "tray_resume": "▶️ 3D操作を再開",
+        "tray_update": "🔄 アップデート確認",
         "tray_exit": "❌ 終了",
         "tray_minimized_title": "SolidMouse バックグラウンド実行中",
         "tray_minimized_msg": "システムトレイで起動しています。",
@@ -174,7 +194,14 @@
         "msg_reset_confirm_title": "リセット確認",
         "msg_reset_confirm": "デフォルトに戻しますか？",
         "msg_reset_success_title": "リセット完了",
-        "msg_reset_success": "リセットされました！"
+        "msg_reset_success": "リセットされました！",
+
+        "msg_update_latest_title": "最新バージョンです",
+        "msg_update_latest_msg": "現在最新のSolidMouse (v1.0.0) を使用しています。",
+        "msg_update_avail_title": "新しいバージョンがあります",
+        "msg_update_avail_msg": "GitHubに新しいバージョン ({ver}) があります。ダウンロードページを開きますか？",
+        "msg_update_error_title": "確認失敗",
+        "msg_update_error_msg": "GitHubへの接続に失敗しました。"
     },
     "ko": {
         "title": "SolidMouse - 3D SpaceMouse 컨트롤 센터",
@@ -196,6 +223,7 @@
         "btn_backup_config": "📦 백업 내보내기",
         "btn_restore_config": "📂 백업 복원하기",
         "btn_reset_defaults": "↺ 기본값으로 초기화",
+        "btn_check_update": "🔄 업데이트 확인",
 
         "lbl_app_filter_group": " 애플리케이션 활성화 설정 ",
         "chk_target_app": "SOLIDWORKS 창이 활성화되었을 때만 3D 조작 활성화",
@@ -216,6 +244,7 @@
         "tray_show": "🖥️ SolidMouse 창 열기 (Ctrl+Alt+S)",
         "tray_pause": "⏸️ 3D 제어 일시 정지",
         "tray_resume": "▶️ 3D 제어 재개",
+        "tray_update": "🔄 업데이트 확인",
         "tray_exit": "❌ 종료",
         "tray_minimized_title": "SolidMouse 백그라운드 실행 중",
         "tray_minimized_msg": "시스템 트레이에서 실행 중입니다.",
@@ -233,7 +262,14 @@
         "msg_reset_confirm_title": "초기화 확인",
         "msg_reset_confirm": "기본 설정으로 초기화하시겠습니까?",
         "msg_reset_success_title": "초기화 완료",
-        "msg_reset_success": "초기화되었습니다!"
+        "msg_reset_success": "초기화되었습니다!",
+
+        "msg_update_latest_title": "최신 버전입니다",
+        "msg_update_latest_msg": "현재 최신 버전의 SolidMouse (v1.0.0)를 사용 중입니다.",
+        "msg_update_avail_title": "새 버전 출시",
+        "msg_update_avail_msg": "GitHub에 새로운 버전 ({ver})이 출시되었습니다. 다운로드 페이지를 열어보시겠습니까?",
+        "msg_update_error_title": "확인 실패",
+        "msg_update_error_msg": "GitHub 리포지토리에 연결할 수 없습니다."
     },
     "zh": {
         "title": "SolidMouse - 3D SpaceMouse 控制中心",
@@ -255,6 +291,7 @@
         "btn_backup_config": "📦 导出备份 (Backup)",
         "btn_restore_config": "📂 导入恢复 (Restore)",
         "btn_reset_defaults": "↺ 恢复默认设置",
+        "btn_check_update": "🔄 检查软件更新",
 
         "lbl_app_filter_group": " 应用程序激活设置 ",
         "chk_target_app": "仅在 SOLIDWORKS 窗口激活时启用 3D 控制",
@@ -275,6 +312,7 @@
         "tray_show": "🖥️ 打开 SolidMouse 窗口 (Ctrl+Alt+S)",
         "tray_pause": "⏸️ 暂停 3D 控制",
         "tray_resume": "▶️ 恢复 3D 控制",
+        "tray_update": "🔄 检查软件更新",
         "tray_exit": "❌ 退出应用程序",
         "tray_minimized_title": "SolidMouse 正在后台运行",
         "tray_minimized_msg": "SolidMouse 已托盘最小化运行。",
@@ -292,6 +330,13 @@
         "msg_reset_confirm_title": "确认恢复默认",
         "msg_reset_confirm": "确定恢复默认设置吗？",
         "msg_reset_success_title": "恢复完成",
-        "msg_reset_success": "设置已恢复为默认值！"
+        "msg_reset_success": "设置已恢复为默认值！",
+
+        "msg_update_latest_title": "已是最新版本",
+        "msg_update_latest_msg": "您当前使用的是最新版本的 SolidMouse (v1.0.0)。",
+        "msg_update_avail_title": "发现新版本！",
+        "msg_update_avail_msg": "GitHub 上有新版本 ({ver}) 可用！\n\n更新说明:\n{log}\n\n是否立即打开下载页面？",
+        "msg_update_error_title": "检查更新失败",
+        "msg_update_error_msg": "无法连接至 GitHub 仓库。请检查网络连接。"
     }
 }

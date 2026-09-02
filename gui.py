@@ -4,6 +4,8 @@ import sys
 import threading
 import time
 import datetime
+import urllib.request
+import webbrowser
 import ctypes
 from ctypes import c_long, c_ulong, Structure, byref, POINTER, c_int, c_uint
 import tkinter as tk
@@ -14,6 +16,10 @@ import pystray
 
 from inputs_manager import UnifiedControllerManager
 from solidworks_mouse import SolidWorksNavigator, get_foreground_window_info
+
+CURRENT_VERSION = "1.0.0"
+REPO_VERSION_URL = "https://raw.githubusercontent.com/H2o86/gamepad_3D_Mouse/main/version.json"
+REPO_HOME_URL = "https://github.com/H2o86/gamepad_3D_Mouse"
 
 # Windows API for Global Hotkey (Ctrl+Alt+S)
 user32 = ctypes.windll.user32
@@ -109,18 +115,19 @@ DEFAULT_CONFIG = {
 GUIDE_TEXTS = {
     "en": """=== SOLIDMOUSE - 3D SPACEMOUSE FOR SOLIDWORKS ===
 
-1. BACKUP / RESTORE & FACTORY DEFAULTS
+1. REPOSITORY AUTO-UPDATE & BACKUP
 --------------------------------------------------
-- Backup Config : Click '📦 Backup Config' to export all your sensitivity, deadzones, and custom key mappings to a .json file.
-- Restore Config: Click '📂 Restore Config' to import and apply a previously saved custom configuration file.
-- Reset Defaults: Click '↺ Reset Factory Defaults' anytime to restore factory baseline settings.
+- Auto Update    : Click '🔄 Check for Updates' or use System Tray menu to check GitHub repository for new releases.
+- Backup Config  : Click '📦 Backup Config' to export all your sensitivity, deadzones, and custom key mappings to a .json file.
+- Restore Config : Click '📂 Restore Config' to import and apply a previously saved custom configuration file.
+- Reset Defaults : Click '↺ Reset Factory Defaults' anytime to restore factory baseline settings.
 
 2. SYSTEM TRAY & GLOBAL HOTKEY (Ctrl+Alt+S)
 --------------------------------------------------
 - SolidMouse can run silently in your System Tray (Taskbar notification area).
 - Press [Ctrl + Alt + S] anywhere in Windows to toggle showing or hiding the SolidMouse control window!
 - Clicking the 'X' button hides the window to the System Tray without stopping 3D navigation.
-- Right-click the SolidMouse Tray Icon for quick actions: Open GUI, Pause/Resume, Switch Language, or Exit.
+- Right-click the SolidMouse Tray Icon for quick actions: Open GUI, Pause/Resume, Check Updates, Switch Language, or Exit.
 
 3. OVERVIEW & FEATURES
 --------------------------------------------------
@@ -146,18 +153,14 @@ SolidMouse converts standard gamepads (Flydigi Dune Fox, Xbox, PS4/PS5) into a d
 - Button Y / 🔺      : View Orientation Dialog (Spacebar)
 - Click L3 Stick     : Toggle Precision Mode (30% Speed for micro-details)
 - Click R3 Stick     : Pause / Resume 3D Mouse Control
-
-5. HOW TO CONNECT CONTROLLERS
---------------------------------------------------
-- Flydigi Dune Fox / Xbox: Connect via 2.4G USB Dongle or USB Cable (XInput Mode).
-- PlayStation PS4 / PS5  : Connect via Bluetooth or USB Cable (DirectInput + Gyro Mode).
 """,
     "vi": """=== SOLIDMOUSE - TRUNG TÂM ĐIỀU KHIỂN 3D SPACEMOUSE SOLIDWORKS ===
 
-1. SAO LƯU BACKUP / PHỤC HỒI RESTORE & MẶC ĐỊNH
+1. CẬP NHẬT TỰ ĐỘNG TỪ GITHUB & BACKUP/RESTORE
 --------------------------------------------------
-- Sao lưu Config : Bấm '📦 Sao Lưu Backup' để xuất toàn bộ cấu hình độ nhạy & gán phím riêng của bạn ra file .json.
-- Phục hồi Config: Bấm '📂 Phục Hồi Restore' để nạp lại file cấu hình sao lưu đã lưu trước đó.
+- Cập nhật Tự Động: Bấm '🔄 Kiểm Tra Cập Nhật' hoặc mở Menu Khay hệ thống để tự động kiểm tra bản phát hành mới trên GitHub Repository.
+- Sao lưu Config  : Bấm '📦 Sao Lưu Backup' để xuất toàn bộ cấu hình độ nhạy & gán phím riêng của bạn ra file .json.
+- Phục hồi Config : Bấm '📂 Phục Hồi Restore' để nạp lại file cấu hình sao lưu đã lưu trước đó.
 - Khôi phục Mặc Định: Bấm '↺ Khôi Phục Mặc Định' bất kỳ lúc nào để trả cấu hình về thiết lập nhà sản xuất ban đầu.
 
 2. CHẠY ẨN KHAY HỆ THỐNG & PHÍM TẮT (Ctrl+Alt+S)
@@ -165,7 +168,7 @@ SolidMouse converts standard gamepads (Flydigi Dune Fox, Xbox, PS4/PS5) into a d
 - SolidMouse hỗ trợ chạy ẩn ngầm dưới Khay hệ thống (System Tray / Taskbar).
 - Nhấn tổ hợp phím [Ctrl + Alt + S] ở bất kỳ đâu trong Windows để bật/tắt nhanh giao diện cài đặt!
 - Khi nhấn nút 'X' đóng cửa sổ, phần mềm sẽ ẩn xuống Khay hệ thống mà không làm ngắt điều khiển 3D.
-- Click chuột phải vào Icon dưới Taskbar để: Mở giao diện, Tạm dừng/Tiếp tục, Đổi ngôn ngữ, hoặc Thoát hẳn.
+- Click chuột phải vào Icon dưới Taskbar để: Mở giao diện, Tạm dừng/Tiếp tục, Kiểm tra Cập nhật, Đổi ngôn ngữ, hoặc Thoát hẳn.
 
 3. TỔNG QUAN & TÍNH NĂNG
 --------------------------------------------------
@@ -194,33 +197,36 @@ SolidMouse biến các loại tay cầm chơi game (Flydigi Dune Fox, Xbox, PS4/
 """,
     "ja": """=== SOLIDMOUSE - SOLIDWORKS用 3D SPACEMOUSE コントローラー ===
 
-1. バックアップ / 復元 & デフォルト復元
+1. 自動アップデート & バックアップ
 --------------------------------------------------
+- 自動アップデート: 「🔄 アップデート確認」をクリックしてGitHubから最新バージョンを確認します。
 - 設定のバックアップ: 「📦 バックアップ出力」をクリックして現在の設定を.jsonファイルに保存します。
 - 設定の復元: 「📂 バックアップ復元」をクリックして保存した設定ファイルを読み込みます。
-- デフォルト復元: 「↺ デフォルトに戻す」をクリックして工場出荷時の初期設定に戻します。
+- デフォルト復元: 「↺ デフォルトに戻す」をクリックして初期設定に戻します。
 """,
     "ko": """=== SOLIDMOUSE - SOLIDWORKS 3D SPACEMOUSE 컨트롤 센터 ===
 
-1. 백업 / 복원 & 기본값 초기화
+1. 자동 업데이트 & 백업/복원
 --------------------------------------------------
+- 자동 업데이트: '🔄 업데이트 확인'을 눌러 GitHub 리포지토리에서 최신 버전을 확인합니다.
 - 설정 백업: '📦 백업 내보내기'를 눌러 감도 및 키 매핑을 .json 파일로 저장합니다.
 - 설정 복원: '📂 백업 복원하기'를 눌러 이전에 저장한 설정 파일을 불러옵니다.
-- 기본값 초기화: '↺ 기본값으로 초기화'를 눌러 언제든지 공장 초기 설정으로 되돌립니다.
+- 기본값 초기화: '↺ 기본값으로 초기화'를 눌러 공장 초기 설정으로 되돌립니다.
 """,
     "zh": """=== SOLIDMOUSE - SOLIDWORKS 专用 3D SPACEMOUSE 控制中心 ===
 
-1. 导出备份 / 导入恢复与恢复默认
+1. 自动更新与备份恢复
 --------------------------------------------------
-- 导出备份: 点击 “📦 导出备份” 将您的自定义灵敏度与按键映射导出为 .json 文件。
-- 导入恢复: 点击 “📂 导入恢复” 重新载入此前保存的自定义配置文件。
+- 检查更新: 点击 “🔄 检查软件更新” 或使用系统托盘菜单检测 GitHub 仓库最新版本。
+- 导出备份: 点击 “📦 导出备份” 将自定义设置导出为 .json 文件。
+- 导入恢复: 点击 “📂 导入恢复” 重新载入此前保存的配置文件。
 - 恢复默认: 点击 “↺ 恢复默认设置” 随时恢复至出厂初始默认设置。
 """,
 }
 
 
 class ApplicationGUI(tk.Tk):
-    """Unified Control Center for Flydigi Dune Fox, Xbox & PlayStation PS4/PS5 Controllers with Backup/Restore & Default Reset."""
+    """Unified Control Center for Flydigi Dune Fox, Xbox & PlayStation PS4/PS5 Controllers with Repository Auto-Update."""
 
     def __init__(self, start_minimized=False):
         super().__init__()
@@ -258,7 +264,7 @@ class ApplicationGUI(tk.Tk):
         self.tray_icon = None
         self.tray_thread = None
 
-        self.title(self.tr("title"))
+        self.title(f"{self.tr('title')} (v{CURRENT_VERSION})")
         self.create_widgets()
         self.start_service()
 
@@ -326,6 +332,7 @@ class ApplicationGUI(tk.Tk):
                     lambda item: self.tr("tray_resume") if self.navigator.paused else self.tr("tray_pause"),
                     self.toggle_pause_from_tray,
                 ),
+                pystray.MenuItem(self.tr("tray_update"), lambda: self.after(0, self.check_for_updates)),
                 pystray.Menu.SEPARATOR,
                 pystray.MenuItem("🌐 Language", pystray.Menu(
                     pystray.MenuItem("English (EN)", lambda: self.change_language("en")),
@@ -339,7 +346,7 @@ class ApplicationGUI(tk.Tk):
                 pystray.MenuItem(self.tr("tray_exit"), self.exit_app_from_tray),
             )
 
-            self.tray_icon = pystray.Icon("SolidMouse", image, "SolidMouse - 3D SpaceMouse (Ctrl+Alt+S)", menu)
+            self.tray_icon = pystray.Icon("SolidMouse", image, f"SolidMouse v{CURRENT_VERSION} (Ctrl+Alt+S)", menu)
             self.tray_thread = threading.Thread(target=self.tray_icon.run, daemon=True)
             self.tray_thread.start()
         except Exception as e:
@@ -414,8 +421,54 @@ class ApplicationGUI(tk.Tk):
                 pass
         self.after(0, self.on_close)
 
+    # Auto-Update Engine
+    def check_for_updates(self):
+        """Asynchronously checks GitHub repository for latest version release."""
+
+        def update_thread_proc():
+            try:
+                req = urllib.request.Request(
+                    REPO_VERSION_URL,
+                    headers={"User-Agent": "SolidMouse-AutoUpdater"},
+                )
+                with urllib.request.urlopen(req, timeout=6) as response:
+                    raw_data = response.read().decode("utf-8")
+                    remote_info = json.loads(raw_data)
+
+                remote_ver = remote_info.get("version", CURRENT_VERSION)
+                download_url = (
+                    remote_info.get("installer_url")
+                    or remote_info.get("download_url")
+                    or remote_info.get("repo_url")
+                    or REPO_HOME_URL
+                )
+                changelog = remote_info.get("changelog", "No release notes available.")
+
+                def on_ui_result():
+                    if remote_ver > CURRENT_VERSION:
+                        msg_text = self.tr("msg_update_avail_msg").format(ver=remote_ver, log=changelog)
+                        if messagebox.askyesno(self.tr("msg_update_avail_title"), msg_text):
+                            webbrowser.open(download_url)
+                    else:
+                        messagebox.showinfo(
+                            self.tr("msg_update_latest_title"),
+                            self.tr("msg_update_latest_msg"),
+                        )
+
+                self.after(0, on_ui_result)
+
+            except Exception as e:
+                def on_ui_error():
+                    messagebox.showwarning(
+                        self.tr("msg_update_error_title"),
+                        f"{self.tr('msg_update_error_msg')}\n\nDetails: {e}",
+                    )
+
+                self.after(0, on_ui_error)
+
+        threading.Thread(target=update_thread_proc, daemon=True).start()
+
     def _sync_ui_from_config(self):
-        """Syncs all GUI controls, sliders, entries, and options with self.config_data."""
         curr_mode = self.config_data.get("device_mode", "auto")
         if curr_mode == "playstation":
             self.combo_dev_mode.set("PlayStation PS4 DualShock 4 / PS5 DualSense")
@@ -479,9 +532,7 @@ class ApplicationGUI(tk.Tk):
         except Exception as e:
             messagebox.showerror(self.tr("msg_save_error_title"), f"{self.tr('msg_save_error')}{e}")
 
-    # Backup & Restore Methods
     def backup_config(self):
-        """Exports current custom configuration to a user-specified .json backup file."""
         now_str = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         default_filename = f"SolidMouse_Backup_{now_str}.json"
 
@@ -496,7 +547,6 @@ class ApplicationGUI(tk.Tk):
             return
 
         try:
-            # Sync latest UI entries to config_data before saving backup
             self.config_data["sensitivity"]["pan"] = round(self.slider_pan.get(), 1)
             self.config_data["sensitivity"]["rotate"] = round(self.slider_rotate.get(), 1)
             self.config_data["sensitivity"]["zoom"] = round(self.slider_zoom.get(), 1)
@@ -522,7 +572,6 @@ class ApplicationGUI(tk.Tk):
             messagebox.showerror(self.tr("msg_save_error_title"), f"{self.tr('msg_save_error')}{e}")
 
     def restore_config(self):
-        """Imports and applies a previously saved custom .json configuration backup file."""
         file_path = filedialog.askopenfilename(
             filetypes=[("SolidMouse Backup JSON", "*.json"), ("JSON Files", "*.json"), ("All Files", "*.*")],
             title=self.tr("btn_restore_config"),
@@ -535,7 +584,6 @@ class ApplicationGUI(tk.Tk):
             with open(file_path, "r", encoding="utf-8") as f:
                 loaded_data = json.load(f)
 
-            # Validate basic schema requirements
             if not isinstance(loaded_data, dict) or "sensitivity" not in loaded_data or "keymap" not in loaded_data:
                 messagebox.showerror(self.tr("msg_restore_invalid_title"), self.tr("msg_restore_invalid"))
                 return
@@ -543,7 +591,6 @@ class ApplicationGUI(tk.Tk):
             self.config_data = loaded_data
             self._sync_ui_from_config()
 
-            # Save to local config.json
             with open(CONFIG_PATH, "w", encoding="utf-8") as f:
                 json.dump(self.config_data, f, indent=4)
 
@@ -555,7 +602,6 @@ class ApplicationGUI(tk.Tk):
             messagebox.showerror(self.tr("msg_save_error_title"), f"{self.tr('msg_save_error')}{e}")
 
     def reset_to_defaults(self):
-        """Resets all sensitivity, key mappings, and cursor options back to factory baseline defaults."""
         if messagebox.askyesno(self.tr("msg_reset_confirm_title"), self.tr("msg_reset_confirm")):
             self.config_data = json.loads(json.dumps(DEFAULT_CONFIG))
             self.config_data["language"] = self.lang_code
@@ -577,8 +623,8 @@ class ApplicationGUI(tk.Tk):
         lang_map = {"en": "English (EN)", "vi": "Tiếng Việt (VI)", "ja": "日本語 (JA)", "ko": "한국어 (KO)", "zh": "中文 (ZH)"}
         self.combo_lang.set(lang_map.get(new_lang, "English (EN)"))
 
-        self.title(self.tr("title"))
-        self.lbl_title.config(text=self.tr("title"))
+        self.title(f"{self.tr('title')} (v{CURRENT_VERSION})")
+        self.lbl_title.config(text=f"{self.tr('title')} (v{CURRENT_VERSION})")
         self.lbl_dev_mode.config(text=self.tr("device_profile"))
         self.lbl_info.config(text=self.tr("key_info"))
 
@@ -607,6 +653,8 @@ class ApplicationGUI(tk.Tk):
         self.btn_restore2.config(text=self.tr("btn_restore_config"))
         self.btn_save_opt.config(text=self.tr("btn_save_all"))
 
+        self.btn_check_update.config(text=self.tr("btn_check_update"))
+
         self.notebook.tab(0, text=self.tr("tab_keys"))
         self.notebook.tab(1, text=self.tr("tab_options"))
         self.notebook.tab(2, text=self.tr("tab_guide"))
@@ -627,12 +675,23 @@ class ApplicationGUI(tk.Tk):
         header = ttk.Frame(self, padding=12)
         header.pack(fill="x")
 
+        title_frame = ttk.Frame(header)
+        title_frame.pack(fill="x")
+
         self.lbl_title = ttk.Label(
-            header,
-            text=self.tr("title"),
-            font=("Segoe UI", 13, "bold"),
+            title_frame,
+            text=f"{self.tr('title')} (v{CURRENT_VERSION})",
+            font=("Segoe UI", 12, "bold"),
         )
-        self.lbl_title.pack(anchor="w")
+        self.lbl_title.pack(side="left")
+
+        self.btn_check_update = ttk.Button(
+            title_frame,
+            text=self.tr("btn_check_update"),
+            command=self.check_for_updates,
+            width=20,
+        )
+        self.btn_check_update.pack(side="right")
 
         dev_frame = ttk.Frame(header, padding=(0, 5, 0, 0))
         dev_frame.pack(fill="x")
@@ -915,6 +974,7 @@ class ApplicationGUI(tk.Tk):
                 active_pressed = [k for k, v in state["buttons"].items() if v]
                 txt = (
                     f"--- UNIFIED MULTI-CONTROLLER DIAGNOSTICS ---\n"
+                    f"Version             : v{CURRENT_VERSION}\n"
                     f"Language            : {self.lang_code.upper()}\n"
                     f"Controller Profile  : {dev_name} ({dev_type.upper()})\n"
                     f"Foreground Window   : '{title}'\n"
@@ -922,6 +982,7 @@ class ApplicationGUI(tk.Tk):
                     f"SolidWorks Active   : {'YES (Controlling 3D Viewport)' if is_sw_active else 'NO (Control Suspended)'}\n"
                     f"Edge Border Wrap    : {'ENABLED (Seamless 3D Rotation)' if self.navigator.config.get('app_filter', {}).get('lock_cursor_center') else 'DISABLED'}\n"
                     f"Global Hotkey       : Ctrl+Alt+S (Toggle Show/Hide GUI)\n"
+                    f"Repository URL      : {REPO_HOME_URL}\n"
                     f"----------------------------------------------\n"
                     f"Left Stick (Pan)    : LX={state['lx']:+.3f}, LY={state['ly']:+.3f}\n"
                     f"Right Stick (Rotate): RX={state['rx']:+.3f}, RY={state['ry']:+.3f}\n"
