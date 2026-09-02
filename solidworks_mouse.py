@@ -413,9 +413,18 @@ class SolidWorksNavigator:
 
             if lock_mode:
                 cur_x, cur_y = get_cursor_pos()
-                margin = 100
+                margin = 120
                 if cur_x < margin or cur_x > sw - margin or cur_y < margin or cur_y > sh - margin:
+                    # Release MMB so SolidWorks commits current rotated angle without resetting
+                    send_mouse_event(MOUSEEVENTF_MIDDLEUP)
+                    time.sleep(0.003)
+                    # Warp cursor back to center while MMB is released
                     set_cursor_pos(center_x, center_y)
+                    time.sleep(0.003)
+                    # Re-press MMB at center to start a new seamless drag segment
+                    send_mouse_event(MOUSEEVENTF_MIDDLEDOWN)
+                    self.acc_x = 0.0
+                    self.acc_y = 0.0
 
     def _release_modifiers(self):
         if self.ctrl_down:
