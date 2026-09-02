@@ -3,10 +3,24 @@ import os
 import sys
 import threading
 import time
+import ctypes
+from ctypes import c_long, c_ulong, Structure, byref, POINTER, c_int, c_uint
 import tkinter as tk
 from tkinter import ttk, messagebox
+
+from PIL import Image
+import pystray
+
 from inputs_manager import UnifiedControllerManager
 from solidworks_mouse import SolidWorksNavigator, get_foreground_window_info
+
+# Windows API for Global Hotkey (Ctrl+Alt+S)
+user32 = ctypes.windll.user32
+MOD_ALT = 0x0001
+MOD_CONTROL = 0x0002
+MOD_SHIFT = 0x0004
+VK_S = 0x53  # 'S' key
+HOTKEY_ID = 101
 
 
 def get_base_dir():
@@ -25,6 +39,7 @@ CONFIG_PATH = os.path.join(get_base_dir(), "config.json")
 PRESETS_PATH = get_resource_path("sw_shortcuts.json")
 LANG_PATH = get_resource_path("lang.json")
 ICON_ICO_PATH = get_resource_path(os.path.join("assets", "icon.ico"))
+ICON_PNG_PATH = get_resource_path(os.path.join("assets", "icon.png"))
 
 BUTTON_DEFS_XBOX = [
     ("button_dpad_up", "D-Pad Up"),
@@ -93,15 +108,22 @@ DEFAULT_CONFIG = {
 GUIDE_TEXTS = {
     "en": """=== SOLIDMOUSE - 3D SPACEMOUSE FOR SOLIDWORKS ===
 
-1. OVERVIEW & FEATURES
+1. SYSTEM TRAY & GLOBAL HOTKEY (Ctrl+Alt+S)
+--------------------------------------------------
+- SolidMouse can run silently in your System Tray (Taskbar notification area).
+- Press [Ctrl + Alt + S] anywhere in Windows to toggle showing or hiding the SolidMouse control window!
+- Clicking the 'X' button hides the window to the System Tray without stopping 3D navigation.
+- Right-click the SolidMouse Tray Icon for quick actions: Open GUI, Pause/Resume, Switch Language, or Exit.
+
+2. OVERVIEW & FEATURES
 --------------------------------------------------
 SolidMouse converts standard gamepads (Flydigi Dune Fox, Xbox, PS4/PS5) into a dedicated 3D SpaceMouse for SolidWorks.
 - Native Low-Latency Control (~1ms XInput API response).
-- Smooth Edge Border Wrapping: 100% continuous 3D rotation without cursor border collisions.
+- Seamless Edge Border Wrapping: 100% continuous 3D rotation without cursor border collisions or resets.
 - SOLIDWORKS Window Focus Filtering: Automatically suspends control when switching to other apps.
 - 6-Axis Gyroscope Navigation: Tilt your PS4/PS5 controller to rotate models physically in 3D space!
 
-2. DEFAULT CONTROL MAPPING
+3. DEFAULT CONTROL MAPPING
 --------------------------------------------------
 - Left Analog Stick  : Pan View (Ctrl + Middle Mouse Drag)
 - Right Analog Stick : Rotate View 3D (Middle Mouse Drag)
@@ -118,26 +140,33 @@ SolidMouse converts standard gamepads (Flydigi Dune Fox, Xbox, PS4/PS5) into a d
 - Click L3 Stick     : Toggle Precision Mode (30% Speed for micro-details)
 - Click R3 Stick     : Pause / Resume 3D Mouse Control
 
-3. HOW TO CONNECT CONTROLLERS
+4. HOW TO CONNECT CONTROLLERS
 --------------------------------------------------
 - Flydigi Dune Fox / Xbox: Connect via 2.4G USB Dongle or USB Cable (XInput Mode).
 - PlayStation PS4 / PS5  : Connect via Bluetooth or USB Cable (DirectInput + Gyro Mode).
 
-4. CUSTOM KEY MAPPER
+5. CUSTOM KEY MAPPER
 --------------------------------------------------
 Go to '🎮 Key Mapper' tab to rebind any of the 14 buttons to preset SolidWorks 2019 shortcuts or custom hotkeys (e.g., Ctrl+Alt+S, F5, Shift+E).
 """,
     "vi": """=== SOLIDMOUSE - TRUNG TÂM ĐIỀU KHIỂN 3D SPACEMOUSE SOLIDWORKS ===
 
-1. TỔNG QUAN & TÍNH NĂNG
+1. CHẠY ẨN KHAY HỆ THỐNG & PHÍM TẮT NHAU (Ctrl+Alt+S)
+--------------------------------------------------
+- SolidMouse hỗ trợ chạy ẩn ngầm dưới Khay hệ thống (System Tray / Taskbar).
+- Nhấn tổ hợp phím [Ctrl + Alt + S] ở bất kỳ đâu trong Windows để bật/tắt nhanh giao diện cài đặt!
+- Khi nhấn nút 'X' đóng cửa sổ, phần mềm sẽ ẩn xuống Khay hệ thống mà không làm ngắt điều khiển 3D.
+- Click chuột phải vào Icon dưới Taskbar để: Mở giao diện, Tạm dừng/Tiếp tục, Đổi ngôn ngữ, hoặc Thát hẳn.
+
+2. TỔNG QUAN & TÍNH NĂNG
 --------------------------------------------------
 SolidMouse biến các loại tay cầm chơi game (Flydigi Dune Fox, Xbox, PS4/PS5) thành thiết bị 3D SpaceMouse chuyên dụng cho SolidWorks.
 - Phản hồi siêu mượt (~1ms XInput Native API).
-- Chống văng viền chuột (Edge Wrapping): Xoay 3D mượt 100% không bị gián đoạn hay giật khựng.
+- Chống văng viền chuột liền mạch (Seamless Edge Wrapping): Xoay 360° vô tận không bị gián đoạn hay reset góc.
 - Tự động lọc cửa sổ SolidWorks: Chỉ kích hoạt khi mở SolidWorks, tự ngắt khi chuyển sang app khác.
 - Gyroscope 6DoF: Nghiêng tay cầm PS4/PS5 thực tế để xoay mô hình 3D trực quan trong không gian!
 
-2. SƠ ĐỒ ĐIỀU KHIỂN MẶC ĐỊNH
+3. SƠ ĐỒ ĐIỀU KHIỂN MẶC ĐỊNH
 --------------------------------------------------
 - Cần gạt Trái (Left Stick)  : Pan View (Ctrl + Giữ Chuột Giữa)
 - Cần gạt Phải (Right Stick) : Rotate View 3D (Giữ Chuột Giữa)
@@ -154,104 +183,48 @@ SolidMouse biến các loại tay cầm chơi game (Flydigi Dune Fox, Xbox, PS4/
 - Nhấn Cần L3                : Bật/Tắt Precision Mode (Giảm 70% tốc độ soi chi tiết nhỏ)
 - Nhấn Cần R3                : Tạm dừng / Tiếp tục điều khiển
 
-3. KẾT NỐI TAY CẦM
+4. KẾT NỐI TAY CẦM
 --------------------------------------------------
 - Flydigi Dune Fox / Xbox: Cắm Dongle 2.4G USB hoặc Cáp USB (Chế độ XInput).
 - PlayStation PS4 / PS5  : Kết nối Bluetooth hoặc Cáp USB (Chế độ DirectInput + Gyro).
 
-4. GÁN PHÍM TÙY CHỈNH (KEY MAPPER)
+5. GÁN PHÍM TÙY CHỈNH (KEY MAPPER)
 --------------------------------------------------
 Vào Tab '🎮 Gán Phím Chức Năng' để chọn nhanh phím tắt SolidWorks 2019 hoặc tự gõ tổ hợp phím bất kỳ (VD: Ctrl+Alt+S, F5, Shift+E) cho 14 nút bấm.
 """,
     "ja": """=== SOLIDMOUSE - SOLIDWORKS用 3D SPACEMOUSE コントローラー ===
 
-1. 概要と特徴
+1. システムトレイ & グローバルショートカット (Ctrl+Alt+S)
 --------------------------------------------------
-SolidMouseは、一般的なゲームパッド（Flydigi Dune Fox、Xbox、PS4/PS5）をSolidWorks専用の3D SpaceMouseに変換します。
-- 超低遅延コントロール（~1ms XInput Native API）。
-- 滑らかな画面端ラッピング（Edge Wrapping）：画面端に衝突することなく100%スムーズな3D回転。
-- SOLIDWORKS ウィンドウフォーカス機能：他のアプリ操作時は自動的にコントロールを一時停止。
-- 6軸ジャイロスコープナビゲーション：PS4/PS5コントローラーを傾けて、3Dモデルを直感的に回転！
-
-2. デフォルトコントロール配置
---------------------------------------------------
-- 左スティック     : パン移動 (Ctrl + 中央ドラッグ)
-- 右スティック     : 3D回転 (中央ドラッグ)
-- LT / RT (L2/R2)  : ズームアウト / ズームイン (Shift + 中央ドラッグ)
-- LB / RB (L1/R1)  : ロール回転 左 / 右 (Alt + 中央ドラッグ)
-- 方向キー 上      : 等角投影図 Isometric (Ctrl + 7)
-- 方向キー 下      : 垂直面 Normal To (Ctrl + 8)
-- 方向キー 左      : 全体表示 Zoom to Fit (Fキー)
-- 方向キー 右      : 正面図 Front View (Ctrl + 1)
-- A / ❌ ボタン    : キャンセル (ESCキー)
-- B / ⭕ ボタン    : 再構築 Rebuild (Ctrl + B)
-- X / 🟦 ボタン    : スマート寸法 (Dキー)
-- Y / 🔺 ボタン    : 表示方向ダイアログ (スペースキー)
-- L3スティック押し込: 精密モード切り替え (速度30%)
-- R3スティック押し込: 一時停止 / 再開
+- SolidMouseはシステムトレイ（タスクバー通知領域）で非表示実行が可能です。
+- Windowsのどこからでも [Ctrl + Alt + S] を押すと、設定画面を即座に表示/非表示できます！
+- ウィンドウの 'X' ボタンをクリックすると、3D操作を停止せずにシステムトレイに最小化されます。
 """,
     "ko": """=== SOLIDMOUSE - SOLIDWORKS 3D SPACEMOUSE 컨트롤 센터 ===
 
-1. 개요 및 주요 기능
+1. 시스템 트레이 & 단축키 (Ctrl+Alt+S)
 --------------------------------------------------
-SolidMouse는 일반 게임패드(Flydigi Dune Fox, Xbox, PS4/PS5)를 SolidWorks 전용 3D SpaceMouse로 전환해 줍니다.
-- 초저지연 제어 (~1ms XInput Native API 응답).
-- 부드러운 화면 가장자리 랩핑 (Edge Wrapping): 커서 멈춤 없이 100% 연속 3D 회전.
-- SOLIDWORKS 창 감지 기능: 다른 프로그램 사용 시 3D 제어 자동 일시 정지.
-- 6축 자이로스코프 제어: PS4/PS5 컨트롤러를 실제로 기울여 3D 모델을 회전!
-
-2. 기본 컨트롤 매핑
---------------------------------------------------
-- 왼쪽 스틱         : 평면 이동 Pan (Ctrl + 휠 드래그)
-- 오른쪽 스틱       : 3D 회전 Rotate (휠 드래그)
-- LT / RT (L2 / R2) : 축소 / 확대 Zoom (Shift + 휠 드래그)
-- LB / RB (L1 / R1) : 롤 회전 Roll Left / Right (Alt + 휠 드래그)
-- 방향키 위         : 등재 투영 Isometric (Ctrl + 7)
-- 방향키 아래       : 수직 보기 Normal To (Ctrl + 8)
-- 방향키 왼쪽       : 화면 맞춤 Zoom to Fit (F 키)
-- 방향키 오른쪽     : 정면 보기 Front View (Ctrl + 1)
-- A / ❌ 버튼       : 취소 (ESC 키)
-- B / ⭕ 버튼       : 재생성 Rebuild (Ctrl + B)
-- X / 🟦 버튼       : 지능형 치수 (D 키)
-- Y / 🔺 버튼       : 방향 창 Orientation (스페이스바)
-- L3 스틱 클릭      : 정밀 모드 토글 (30% 속도)
-- R3 스틱 클릭      : 제어 일시 중지 / 재개
+- SolidMouse는 시스템 트레이(작업 표시줄)에서 백그라운드로 실행할 수 있습니다.
+- [Ctrl + Alt + S] 단축키를 누르면 언제든지 설정 창을 열거나 닫을 수 있습니다!
+- 창의 'X' 버튼을 누르면 3D 제어가 중단되지 않고 트레이로 최소화됩니다.
 """,
     "zh": """=== SOLIDMOUSE - SOLIDWORKS 专用 3D SPACEMOUSE 控制中心 ===
 
-1. 概述与核心功能
+1. 系统托盘与全局快捷键 (Ctrl+Alt+S)
 --------------------------------------------------
-SolidMouse 将常规游戏手柄 (Flydigi Dune Fox、Xbox、PS4/PS5) 转换为 SolidWorks 专用 3D SpaceMouse。
-- 超低延迟控制 (~1ms XInput Native API 响应)。
-- 屏幕边缘平滑缠绕 (Edge Wrapping)：3D 旋转 100% 平滑，光标不会卡在屏幕边缘。
-- SOLIDWORKS 窗口焦点过滤：切换到其他应用时自动暂停控制，防止干扰。
-- 6 轴陀螺仪空间控制：倾斜 PS4/PS5 手柄即可在物理空间中直观旋转 3D 模型！
-
-2. 默认控制映射
---------------------------------------------------
-- 左摇杆            : 平移视图 Pan (Ctrl + 中键拖拽)
-- 右摇杆            : 3D 旋转 Rotate (中键拖拽)
-- LT / RT (L2 / R2) : 缩小 / 放大 Zoom (Shift + 中键拖拽)
-- LB / RB (L1 / R1) : 倾斜旋转 Roll (Alt + 中键拖拽)
-- 方向键 上         : 等轴测视图 Isometric (Ctrl + 7)
-- 方向键 下         : 正视于 Normal To (Ctrl + 8)
-- 方向键 左         : 整屏显示 Zoom to Fit (F 键)
-- 方向键 右         : 前视图 Front View (Ctrl + 1)
-- A / ❌ 键         : 退出 / 取消 (ESC 键)
-- B / ⭕ 键         : 重建模型 Rebuild (Ctrl + B)
-- X / 🟦 键         : 智能尺寸 (D 键)
-- Y / 🔺 键         : 视图定向窗口 (空格键)
-- 按下 L3 摇杆      : 切换精细模式 (30% 速度)
-- 按下 R3 摇杆      : 暂停 / 恢复控制
+- SolidMouse 支持在系统托盘 (任务栏通知区) 静默后台运行。
+- 在 Windows 任何位置按 [Ctrl + Alt + S] 即可快速显示或隐藏设置界面！
+- 点击窗口的 'X' 关闭按钮会将窗口最小化到系统托盘，而不会中断 3D 导航。
 """,
 }
 
 
 class ApplicationGUI(tk.Tk):
-    """Unified Control Center for Flydigi Dune Fox, Xbox & PlayStation PS4/PS5 Controllers with i18n support."""
+    """Unified Control Center for Flydigi Dune Fox, Xbox & PlayStation PS4/PS5 Controllers with System Tray & Global Hotkey."""
 
-    def __init__(self):
+    def __init__(self, start_minimized=False):
         super().__init__()
+        self.start_minimized_flag = start_minimized
         self.geometry("780x760")
         self.resizable(True, True)
 
@@ -280,12 +253,23 @@ class ApplicationGUI(tk.Tk):
 
         self.running = True
         self.service_thread = None
+        self.hotkey_thread = None
+
+        self.tray_icon = None
+        self.tray_thread = None
 
         self.title(self.tr("title"))
         self.create_widgets()
         self.start_service()
 
-        self.protocol("WM_DELETE_WINDOW", self.on_close)
+        self.setup_system_tray()
+        self.setup_global_hotkey()
+
+        self.protocol("WM_DELETE_WINDOW", self.hide_to_tray)
+
+        if self.start_minimized_flag:
+            self.withdraw()
+            self.after(1000, self.notify_minimized)
 
     def load_config(self):
         if os.path.exists(CONFIG_PATH):
@@ -325,6 +309,110 @@ class ApplicationGUI(tk.Tk):
                 label = f"{cmd_name} ({shortcut_str})"
                 options[label] = shortcut_str
         return options
+
+    # System Tray Implementation
+    def setup_system_tray(self):
+        try:
+            if os.path.exists(ICON_PNG_PATH):
+                image = Image.open(ICON_PNG_PATH)
+            elif os.path.exists(ICON_ICO_PATH):
+                image = Image.open(ICON_ICO_PATH)
+            else:
+                image = Image.new("RGB", (64, 64), color=(30, 144, 255))
+
+            menu = pystray.Menu(
+                pystray.MenuItem(self.tr("tray_show"), self.show_from_tray, default=True),
+                pystray.MenuItem(
+                    lambda item: self.tr("tray_resume") if self.navigator.paused else self.tr("tray_pause"),
+                    self.toggle_pause_from_tray,
+                ),
+                pystray.Menu.SEPARATOR,
+                pystray.MenuItem("🌐 Language", pystray.Menu(
+                    pystray.MenuItem("English (EN)", lambda: self.change_language("en")),
+                    pystray.MenuItem("Tiếng Việt (VI)", lambda: self.change_language("vi")),
+                    pystray.MenuItem("日本語 (JA)", lambda: self.change_language("ja")),
+                    pystray.MenuItem("한국어 (KO)", lambda: self.change_language("ko")),
+                    pystray.MenuItem("中文 (ZH)", lambda: self.change_language("zh")),
+                )),
+                pystray.Menu.SEPARATOR,
+                pystray.MenuItem(self.tr("tray_exit"), self.exit_app_from_tray),
+            )
+
+            self.tray_icon = pystray.Icon("SolidMouse", image, "SolidMouse - 3D SpaceMouse (Ctrl+Alt+S)", menu)
+            self.tray_thread = threading.Thread(target=self.tray_icon.run, daemon=True)
+            self.tray_thread.start()
+        except Exception as e:
+            print(f"[SolidMouse] System Tray Error: {e}")
+
+    def notify_minimized(self):
+        if self.tray_icon:
+            try:
+                self.tray_icon.notify(
+                    self.tr("tray_minimized_msg"),
+                    title=self.tr("tray_minimized_title"),
+                )
+            except Exception:
+                pass
+
+    def show_from_tray(self, icon=None, item=None):
+        self.deiconify()
+        self.lift()
+        self.focus_force()
+
+    def hide_to_tray(self):
+        self.withdraw()
+
+    def toggle_pause_from_tray(self, icon=None, item=None):
+        self.navigator.paused = not self.navigator.paused
+
+    def toggle_window_visibility(self):
+        if self.state() == "normal":
+            self.withdraw()
+        else:
+            self.show_from_tray()
+
+    # Global Hotkey (Ctrl+Alt+S) Thread
+    def setup_global_hotkey(self):
+        def hotkey_loop():
+            # Register Ctrl+Alt+S globally
+            res = user32.RegisterHotKey(0, HOTKEY_ID, MOD_CONTROL | MOD_ALT, VK_S)
+            if not res:
+                print("[SolidMouse] Could not register Ctrl+Alt+S hotkey (might be reserved).")
+
+            class MSG(Structure):
+                _fields_ = [
+                    ("hwnd", c_ulong),
+                    ("message", c_uint),
+                    ("wParam", c_ulong),
+                    ("lParam", c_long),
+                    ("time", c_ulong),
+                    ("pt_x", c_long),
+                    ("pt_y", c_long),
+                ]
+
+            msg = MSG()
+            while self.running:
+                if user32.GetMessageW(byref(msg), 0, 0, 0) != 0:
+                    if msg.message == 0x0312:  # WM_HOTKEY
+                        if msg.wParam == HOTKEY_ID:
+                            self.after(0, self.toggle_window_visibility)
+                    user32.TranslateMessage(byref(msg))
+                    user32.DispatchMessageW(byref(msg))
+                time.sleep(0.01)
+
+            user32.UnregisterHotKey(0, HOTKEY_ID)
+
+        self.hotkey_thread = threading.Thread(target=hotkey_loop, daemon=True)
+        self.hotkey_thread.start()
+
+    def exit_app_from_tray(self, icon=None, item=None):
+        self.running = False
+        if self.tray_icon:
+            try:
+                self.tray_icon.stop()
+            except Exception:
+                pass
+        self.after(0, self.on_close)
 
     def save_config(self):
         mode_str = self.combo_dev_mode.get()
@@ -399,6 +487,9 @@ class ApplicationGUI(tk.Tk):
         self.config_data["language"] = new_lang
         self.lang_dict = self.load_lang()
 
+        lang_map = {"en": "English (EN)", "vi": "Tiếng Việt (VI)", "ja": "日本語 (JA)", "ko": "한국어 (KO)", "zh": "中文 (ZH)"}
+        self.combo_lang.set(lang_map.get(new_lang, "English (EN)"))
+
         self.title(self.tr("title"))
         self.lbl_title.config(text=self.tr("title"))
         self.lbl_dev_mode.config(text=self.tr("device_profile"))
@@ -430,7 +521,6 @@ class ApplicationGUI(tk.Tk):
         self.notebook.tab(2, text=self.tr("tab_guide"))
         self.notebook.tab(3, text=self.tr("tab_monitor"))
 
-        # Update Guide Text
         self.txt_guide.config(state="normal")
         self.txt_guide.delete("1.0", tk.END)
         self.txt_guide.insert(tk.END, GUIDE_TEXTS.get(new_lang, GUIDE_TEXTS["en"]))
@@ -727,7 +817,8 @@ class ApplicationGUI(tk.Tk):
                     f"Foreground Window   : '{title}'\n"
                     f"Foreground Process  : '{proc_name}'\n"
                     f"SolidWorks Active   : {'YES (Controlling 3D Viewport)' if is_sw_active else 'NO (Control Suspended)'}\n"
-                    f"Edge Border Wrap    : {'ENABLED (Smooth rotation)' if self.navigator.config.get('app_filter', {}).get('lock_cursor_center') else 'DISABLED'}\n"
+                    f"Edge Border Wrap    : {'ENABLED (Seamless 3D Rotation)' if self.navigator.config.get('app_filter', {}).get('lock_cursor_center') else 'DISABLED'}\n"
+                    f"Global Hotkey       : Ctrl+Alt+S (Toggle Show/Hide GUI)\n"
                     f"----------------------------------------------\n"
                     f"Left Stick (Pan)    : LX={state['lx']:+.3f}, LY={state['ly']:+.3f}\n"
                     f"Right Stick (Rotate): RX={state['rx']:+.3f}, RY={state['ry']:+.3f}\n"
@@ -748,10 +839,21 @@ class ApplicationGUI(tk.Tk):
 
     def on_close(self):
         self.running = False
+        if self.tray_icon:
+            try:
+                self.tray_icon.stop()
+            except Exception:
+                pass
         self.navigator._release_all()
         self.destroy()
 
 
 if __name__ == "__main__":
-    app = ApplicationGUI()
+    start_min = False
+    for arg in sys.argv[1:]:
+        if arg.lower() in ("--minimized", "--tray", "-m", "/minimized"):
+            start_min = True
+            break
+
+    app = ApplicationGUI(start_minimized=start_min)
     app.mainloop()
